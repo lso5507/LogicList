@@ -16,7 +16,7 @@
     3. Spring Web
     4. lombok
     5. 패스워드 암호화 - JBcypt
-2. 배포 - Gradle
+2. 빌드 - Gradle
 3. DataBase - H2(개발환경), Postgresql(배포환경)
     1. DB Schema (
     
