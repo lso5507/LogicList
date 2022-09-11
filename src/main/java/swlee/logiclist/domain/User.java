@@ -2,6 +2,8 @@ package swlee.logiclist.domain;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 /**
@@ -15,6 +17,6 @@ public class User {
 
     public User(String username, String password) {
         this.username=username;
-        this.password=password;
+        this.password=BCrypt.hashpw(password,BCrypt.gensalt(10));
     }
 }

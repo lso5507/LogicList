@@ -30,7 +30,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	testCompileOnly 'org.projectlombok:lombok'
 	testAnnotationProcessor 'org.projectlombok:lombok'
-
+	//JDBC
 	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
 

@@ -29,6 +29,7 @@ class UserServiceImplTest {
     void save() {
         User user = new User(USER_A,"test");
         User save = userService.save(user);
+        log.info("USER PASSWORD ={}",user.getPassword());
         Assertions.assertThat(save).isNotNull();
     }
 
