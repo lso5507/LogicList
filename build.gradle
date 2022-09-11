@@ -28,8 +28,10 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-	// https://mvnrepository.com/artifact/org.springframework/spring-jdbc
-	implementation group: 'org.springframework', name: 'spring-jdbc', version: '5.2.22.RELEASE'
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
 
 
 }

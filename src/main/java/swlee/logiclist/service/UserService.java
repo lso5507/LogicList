@@ -5,19 +5,24 @@ import swlee.logiclist.domain.User;
 public interface UserService {
     /**
      * @Pram
-     * String Username - 유저이름
-     * String password - 유저패스워드(평문)
+     * User user - 유저
      * @return User
      */
-    public User save(String username,String password); //첫번째 가입만 받음(관리자)
+    public User save(User user); //첫번째 가입만 받음(관리자)
 
     /**
      * @Prameter
-     * String Username - 유저이름
-     * String password - 유저패스워드(평문)
+     * User user - 유저
      * @return User
      */
-    public User findByName(String username,String password);
+    public User findByName(User user);
+
+    /**
+     * @Prameter
+     * String username - 유저이름
+     * @return boolean - 성공여부
+     */
+    public boolean delete(String username);
 
 
 }
