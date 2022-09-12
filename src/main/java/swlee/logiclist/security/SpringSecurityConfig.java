@@ -21,7 +21,10 @@ public class SpringSecurityConfig  {
             Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/view/main","/css/**","/scripts/**","/plugin/**","/fonts/**")// /view/main 인증 없이 접근가능
+                /**
+                 * image-upload,image - AWS 테스트용
+                 */
+                    .antMatchers("/image-upload","/image","/view/main","/css/**","/scripts/**","/plugin/**","/fonts/**")// /view/main 인증 없이 접근가능
                     .permitAll()
                     .anyRequest().authenticated() // 모든 URL 인증 필요
                 .and()
@@ -33,7 +36,10 @@ public class SpringSecurityConfig  {
                     .defaultSuccessUrl("/view/main", true)
                     .permitAll()
                 .and()
-                    .logout();
+                    .logout()
+                .and()
+                  .csrf().disable();
+
         return http.build();
     }
 
