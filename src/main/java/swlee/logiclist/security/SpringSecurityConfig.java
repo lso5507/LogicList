@@ -38,7 +38,7 @@ public class SpringSecurityConfig  {
                 .and()
                     .logout()
                 .and()
-                  .csrf().disable();
+                    .csrf().disable();  // POST 맵핑을 위해 잠시 비활성화 -> 추후 수정 필요
 
         return http.build();
     }

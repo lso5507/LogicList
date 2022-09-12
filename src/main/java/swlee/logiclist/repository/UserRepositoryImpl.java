@@ -1,6 +1,8 @@
 package swlee.logiclist.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -9,6 +11,7 @@ import swlee.logiclist.domain.User;
 import javax.sql.DataSource;
 
 @Repository
+@Slf4j
 public class UserRepositoryImpl implements UserRepository{
 
     private final JdbcTemplate jdbcTemplate;
@@ -42,7 +45,13 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public User findByName(String  username) {
         final String sql = "SELECT * FROM users WHERE username=?";
-        User findUser = jdbcTemplate.queryForObject(sql, getRowMapper(), username);
+        User findUser=null;
+        try {
+            findUser = jdbcTemplate.queryForObject(sql, getRowMapper(), username);
+        }catch(EmptyResultDataAccessException e){
+            log.error("NotFoundUser :",e);
+            return null;
+        }
         return findUser;
 
     }

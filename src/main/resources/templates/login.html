@@ -35,15 +35,19 @@
         <div class=e14_77><span class="e14_78">개발 팁 및 TodoList</span><span class="e14_79">Find your Logic</span></div>
         <div class="e14_80"></div>
         <div class=e14_89>
-            <div class=e14_93>
-                <div class="e14_94"></div>
-                <span class="e14_95">Login</span></div>
-            <div class=e14_97>
-                <div class="e14_91"></div>
-                <span class="e14_98">패스워드</span></div>
-            <div class=e14_100>
-                <div class="e14_101"></div>
-                <span class="e14_102">아이디</span></div>
+            <form th:action="@{/view/login}" method="POST">
+                <div class=e14_93>
+                    <button class="e14_94"type="submit">Login</button>
+                </div>
+                <div class=e14_97>
+                    <input class="e14_91" type="password" id="password" name="password"placeholder="패스워드를 입력하세요."/>
+                </div>
+                <div class=e14_100>
+                    <input class="e14_101" type="text" id="username" name="username"placeholder="아이디를 입력하세요."/>
+                </div>
+            </form>
+
+
         </div>
         <div class=e14_103>
             <div class="e14_104"></div>
