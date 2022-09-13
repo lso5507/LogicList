@@ -2,6 +2,7 @@ package swlee.logiclist.repository;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import swlee.logiclist.domain.User;
 
 import javax.sql.DataSource;
+import javax.validation.constraints.Null;
 
 @Repository
 @Slf4j
@@ -48,9 +50,11 @@ public class UserRepositoryImpl implements UserRepository{
         User findUser=null;
         try {
             findUser = jdbcTemplate.queryForObject(sql, getRowMapper(), username);
-        }catch(EmptyResultDataAccessException e){
+        }catch(DataAccessException e){
             log.error("NotFoundUser :",e);
             return null;
+        }catch (NullPointerException e){
+            log.error("User_NullPointerException : ",e);
         }
         return findUser;
 

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import swlee.logiclist.Exception.IncorrectAccountException;
 import swlee.logiclist.domain.User;
 import swlee.logiclist.repository.UserRepository;
 
@@ -16,7 +17,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User save(User user) {
-        User save = userRepository.save(user);
+        User save = userRepository.save(encPassword(user));
         return save;
     }
 
@@ -28,12 +29,16 @@ public class UserServiceImpl implements UserService {
         User findUser = userRepository.findByName(user.getUsername());
         if(passwordCheck(user, findUser)){
             log.info("Correct Password ");
-            return user;
+            return  findUser;
         }else{
             log.info("incorrect Password");
-            return  null;
+            throw new IncorrectAccountException("패스워드가 알맞지 않습니다.");
+
         }
 
+    }
+    private static User encPassword(User user){
+        return new User(user.getUsername(),BCrypt.hashpw(user.getPassword(),BCrypt.gensalt(10)));
     }
 
     private static boolean passwordCheck(User user, User findUser) {
