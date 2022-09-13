@@ -577,11 +577,12 @@ margin:0px;
 }
 .e0_63 { 
 	color:rgba(104.99994814395905, 52.99999684095383, 253.0000001192093, 1);
-	width:134px;
+	/*width:134px;*/
 	height:26px;
 	position:absolute;
-	left:15px;
-	top:12px;
+	left:50%;
+	top:50%;
+    transform: translate(-50%,-50%);
 	font-family:ABeeZee;
 	text-align:center;
 	font-size:18px;

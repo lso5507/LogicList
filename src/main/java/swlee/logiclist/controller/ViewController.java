@@ -29,12 +29,16 @@ public class ViewController {
         log.info("ViewController In Login");
         return "login";
     }
+
+    /*
     @PostMapping("/login")
     public String login_post(User user , Model model){
         User findUser = userservice.findByName(user);
         if(findUser==null){
             return "status/404";
         }
+        model.addAttribute("user",user);
         return "main";
-    }
+    }*/
+
 }

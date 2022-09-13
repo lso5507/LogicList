@@ -55,6 +55,7 @@ public class UserRepositoryImpl implements UserRepository{
             return null;
         }catch (NullPointerException e){
             log.error("User_NullPointerException : ",e);
+            return null;
         }
         return findUser;
 
