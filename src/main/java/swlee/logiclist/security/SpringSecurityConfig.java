@@ -13,6 +13,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -48,15 +51,16 @@ public class SpringSecurityConfig  {
                     .loginProcessingUrl("/view/login")
                     .usernameParameter("username") //아이디
                     .passwordParameter("password") //패스워드
-//                    .defaultSuccessUrl("/view/main")
-//                    .failureUrl("/status/404")
+                    .defaultSuccessUrl("/view/main")
+                    .failureUrl("/status/404")
                     .permitAll()
+
                 .successHandler( // 로그인 성공 후 핸들러
                         new AuthenticationSuccessHandler() { // 익명 객체 사용
                             @Override
                             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                                log.info("authentication: {}", authentication.getName());
-                                response.sendRedirect("/");
+                                log.info("authentication.getName()=={},authentication.getCredentials()=={},authentication.getPrincipal()=={}", authentication.getName(),authentication.getCredentials(),authentication.getPrincipal());
+                                response.sendRedirect("/view/main");
                             }
                         })
                 .failureHandler( // 로그인 실패 후 핸들러
@@ -64,11 +68,11 @@ public class SpringSecurityConfig  {
                             @Override
                             public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
                                 log.info("exception: {}", exception.getMessage());
-                                response.sendRedirect("/login");
+                                response.sendRedirect("/view/login");
                             }
                         })
                 .and()
-                    .logout().logoutSuccessUrl("/")
+                    .logout().logoutSuccessUrl("/view/main").logoutUrl("/view/logout")
                 .and()
                     .csrf().disable();
 
@@ -80,6 +84,9 @@ public class SpringSecurityConfig  {
 //    public WebSecurityCustomizer webSecurityCustomizer() {
 //        return (web) -> web.ignoring().antMatchers("/static/js/**","/static/css/**","/static/img/**","/static/frontend/**");
 //    }
-
+@Bean
+public static PasswordEncoder getPasswordEncoder() {
+    return new BCryptPasswordEncoder(10);
+}
 
 }

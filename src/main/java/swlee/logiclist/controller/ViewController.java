@@ -2,6 +2,7 @@ package swlee.logiclist.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,7 @@ import swlee.logiclist.domain.User;
 import swlee.logiclist.service.UserService;
 
 import javax.validation.Valid;
+import java.security.Principal;
 
 @Slf4j
 @Controller
@@ -20,8 +22,14 @@ public class ViewController {
     @Autowired
     private  UserService userservice;
     @GetMapping("/main")
-    public String main(){
+    public String main(Principal principal,Model model){
+
         log.info("ViewController In {}",this.getClass());
+        if(principal!=null){
+            //현재 세션 존재(로그인 유저 있음)
+            log.info("Principal::{}",principal.getName());
+            model.addAttribute("user",principal.getName());
+        }
         return "main";
     }
     @GetMapping("/login")

@@ -1,8 +1,9 @@
 package swlee.logiclist.service;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import swlee.logiclist.domain.User;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
     /**
      * @Pram
      * User user - 유저

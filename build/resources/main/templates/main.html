@@ -90,11 +90,11 @@
 <!--            <div class=e0_61>-->
 <!--                <div class="e0_62"></div>-->
 <!--                <span class="e0_63">Sign In</span></div>-->
-            <div class="e0_21"th:if="${user?.username}">
+            <div class="e0_21"th:if="${user}">
 
-                <span class="e0_63">[[${user?.username}]] 님 환영합니다.</span>
+                <span class="e0_63">[[${user}]] 님 환영합니다.</span>
             </div>
-            <div th:onclick="|location.href='@{/view/login}'|"     class="e0_62"th:unless="${user?.username}">
+            <div th:onclick="|location.href='@{/view/login}'|"     class="e0_62"th:unless="${user}">
 
                 <a class="e0_63">Sign In</a>
             </div>
