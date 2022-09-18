@@ -94,12 +94,22 @@
 
                 <span class="e0_63">[[${user}]] 님 환영합니다.</span>
             </div>
+            <div class="e0_21"th:if="${user}">
+                <button th:onclick="|location.href='@{/view/logout}'|"  class="button">Logout</button>
+            </div>
             <div th:onclick="|location.href='@{/view/login}'|"     class="e0_62"th:unless="${user}">
 
                 <a class="e0_63">Sign In</a>
             </div>
         </div>
-        <div class=e12_29><span class="e0_58">개발 팁 및 TodoList</span><span class="e0_59">Find your Logic</span></div>
+        <div class=e12_29>
+            <div class="head_title">
+                <span class="e0_58">개발 팁 및 TodoList</span>
+                <button class="head_board" th:onclick="|location.href='@{/board/edit}'|" >POST</button>
+            </div>
+            <span class="e0_59">Find your Logic</span>
+        </div>
+
         <span th:onclick="|location.href='@{/view/main}'|"   class="e14_118">LogicList</span></div>
 </div>
 </body>
