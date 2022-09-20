@@ -24,7 +24,13 @@ public class Board {
     private Date date;
 
     public Board(int id, String title, String content, int clickCnt, String image, String username) {
-        this.id = id;
+        this.title = title;
+        this.content = content;
+        this.clickCnt = clickCnt;
+        this.image = image;
+        this.username = username;
+    }
+    public Board( String title, String content, int clickCnt, String image, String username) {
         this.title = title;
         this.content = content;
         this.clickCnt = clickCnt;

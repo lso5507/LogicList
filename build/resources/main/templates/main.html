@@ -105,7 +105,7 @@
         <div class=e12_29>
             <div class="head_title">
                 <span class="e0_58">개발 팁 및 TodoList</span>
-                <button class="head_board" th:onclick="|location.href='@{/board/edit}'|" >POST</button>
+                <button class="head_board" th:if="${user}" th:onclick="|location.href='@{/board/edit}'|" >POST</button>
             </div>
             <span class="e0_59">Find your Logic</span>
         </div>

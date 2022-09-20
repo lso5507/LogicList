@@ -6,7 +6,7 @@
     <meta name="description" content="Figma htmlGenerator">
     <meta name="author" content="htmlGenerator">
     <link href="https://fonts.googleapis.com/css?family=ABeeZee&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link th:href="@{/css/board/edit.css}" rel="stylesheet">
 
     <style>
@@ -28,19 +28,65 @@
     <div class="e31_11">
         <div class="e31_12"></div>
         <div class="e31_13">
-            <div class="e31_14">
-                <div class="e31_15"></div>
-                <span class="e31_16">Sign In</span></div>
             <span class="e31_17">LogicList</span></div>
-        <div class="e31_21"></div>
+
         <div class="e31_32">
             <div class="e31_33"></div>
             <span class="e31_34">Tistory </span><span class="e31_35">Github</span><span
                 class="e31_36">Instagram</span><span class="e31_37">LSW</span></div>
+
+        <div class="content"></div>
         <div class="e32_13">
-            <div class="e32_10"></div>
-            <span class="e32_12">등록</span></div>
+            <button onclick="upload()" class="content_btn">둥록</button>
+        </div>
     </div>
 </div>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+<script>
+        const editor = new toastui.Editor({
+        el: document.querySelector('.content'),
+        height: '700px',
+        initialValue: 'myLogicList',
+        initialEditType: 'wysiwyg'
+      });
+      // AWS S3 이미지 리턴 변수
+
+
+        //Image Upload
+        editor.addHook('addImageBlobHook', (blob, callback) => {
+            const formData = new FormData();
+    <!--                    formData.append("multipartFiles", blob);-->
+                formData.append("data", blob);
+                fetch(location.origin.toString()+"/image-upload", {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    body: formData // body 부분에 폼데이터 변수를 할당
+                })
+                .then((response) => response.json())
+                .then((data) => {
+<!--                   alert(data)-->
+                    callback(data.result);
+                });
+            return false;
+            })
+
+
+        function upload(){
+            let formData = new FormData();
+            formData.append('content',editor.getMarkdown());
+            console.log(editor.getMarkdown());
+    <!--        formData.append('key2', 'value2');-->
+            fetch(location.href.toString(), {
+                method: 'POST',
+                cache: 'no-cache',
+                body: formData // body 부분에 폼데이터 변수를 할당
+            })
+            .then((response) => response.json())
+            .then((data) => {
+               alert(data)
+            });
+
+        }
+</script>
 </body>
 </html>

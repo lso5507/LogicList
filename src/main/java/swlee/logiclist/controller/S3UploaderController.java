@@ -1,5 +1,7 @@
 package swlee.logiclist.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -31,7 +33,18 @@ public class S3UploaderController {
     @ResponseBody
     public String imageUpload(@RequestParam("data") MultipartFile multipartFile) throws IOException {
         log.info("imageUpload IN");
-        return s3UploaderService.upload(multipartFile, "logiclist", "image");
+        String result = s3UploaderService.upload(multipartFile, "logiclist", "image");
+        //JSON Response
+        Gson gson = new Gson();
+        // Json key, value 추가
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("result", result);
+        // JsonObject를 Json 문자열로 변환
+        String jsonStr = gson.toJson(jsonObject);
+        // 생성된 Json 문자열 출력
+        log.info("JSONSTR::{}",jsonStr);
+        return jsonStr;
+
     }
 
 //    @PostMapping("/video-upload")
