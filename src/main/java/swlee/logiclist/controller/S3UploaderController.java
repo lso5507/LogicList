@@ -47,9 +47,4 @@ public class S3UploaderController {
 
     }
 
-//    @PostMapping("/video-upload")
-//    @ResponseBody
-//    public String videoUpload(@RequestParam("data") MultipartFile multipartFile) throws IOException {
-//        return s3UploaderService.upload(multipartFile, "logiclist", "video");
-//    }
 }

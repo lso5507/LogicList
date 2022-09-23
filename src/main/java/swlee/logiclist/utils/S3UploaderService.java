@@ -3,7 +3,7 @@ package swlee.logiclist.utils;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import org.slf4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,9 +15,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Slf4j
 public class S3UploaderService {
 
-    private static final Logger log = org.slf4j.LoggerFactory.getLogger(S3UploaderService.class);
+//    private static final Logger log = org.slf4j.LoggerFactory.getLogger(S3UploaderService.class);
     // local, development 등 현재 프로파일
     @Value("${spring.environment}")
     private String environment;

@@ -27,22 +27,23 @@
     </div>
     <div class="e31_11">
         <div class="e31_12"></div>
-        <div class="e31_13">
-            <span class="e31_17">LogicList</span></div>
+<!--        <div class="e31_13">-->
+<!--            <span class="e31_17">LogicList</span>-->
+<!--        </div>-->
 
         <div class="e31_32">
             <div class="e31_33"></div>
-            <span class="e31_34">Tistory </span><span class="e31_35">Github</span><span
-                class="e31_36">Instagram</span><span class="e31_37">LSW</span></div>
+            <span class="e31_34">Tistory </span><span class="e31_35">Github</span>
+            <span class="e31_36">Instagram</span><span class="e31_37">LSW</span>
+        </div>
 
+        <textarea id="title" cols="80"  placeholder="제목을 입력하세요." class="title"></textarea>
         <div class="content"></div>
         <div class="e32_13">
-            <button onclick="upload()" class="content_btn">둥록</button>
+            <button onclick="upload_confirm()" class="content_btn">둥록</button>
         </div>
-    </div>
-</div>
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-<script>
+        <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+        <script>
         const editor = new toastui.Editor({
         el: document.querySelector('.content'),
         height: '700px',
@@ -55,7 +56,7 @@
         //Image Upload
         editor.addHook('addImageBlobHook', (blob, callback) => {
             const formData = new FormData();
-    <!--                    formData.append("multipartFiles", blob);-->
+                formData.append("multipartFiles", blob);
                 formData.append("data", blob);
                 fetch(location.origin.toString()+"/image-upload", {
                     method: 'POST',
@@ -64,18 +65,27 @@
                 })
                 .then((response) => response.json())
                 .then((data) => {
-<!--                   alert(data)-->
                     callback(data.result);
                 });
             return false;
             })
+        // 게시글 등록 취소
+        function cancel(){
+            if(confirm("작성을 취소하겠습니까?")){
+                location.href="/view/main";
+            }
+        }
 
-
+        function upload_confirm(){
+            if(confirm("등록 하겠습니까?")){
+                upload()
+            }
+        }
         function upload(){
             let formData = new FormData();
             formData.append('content',editor.getMarkdown());
+            formData.append('title',document.getElementById('title').value);
             console.log(editor.getMarkdown());
-    <!--        formData.append('key2', 'value2');-->
             fetch(location.href.toString(), {
                 method: 'POST',
                 cache: 'no-cache',
@@ -83,10 +93,21 @@
             })
             .then((response) => response.json())
             .then((data) => {
-               alert(data)
+               if(data.result=="success"){
+                alert("성공")
+                location.href="/view/main/";
+               }
+               else if(data.result=="failed"){
+                alert("실패")
+               }
             });
 
         }
 </script>
+        <div class="e32_13_1">
+            <button onclick="cancel()" class="content_btn">취소</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>

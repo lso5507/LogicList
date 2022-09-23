@@ -7,9 +7,26 @@ margin:0px;
     height: 700px;
     position: absolute;
     left: 130px;
-    top: 124px;
+    top: 150px;
 }
-
+.title{
+    position: absolute;
+    background: border-box;
+    left: 130px;
+    top: 105px;
+    display: block;
+    width: 100%;
+    height: 56px;
+    border: none;
+    font-size: 30px;
+    color: #202020;
+    font-family:ABeeZee;
+    resize: none;
+    outline: 0 none;
+    line-height: 40px;
+    overflow: hidden;
+    letter-spacing: -.4px;
+    }
 .content_btn{
 	background-color:rgba(104.99994814395905, 52.99999684095383, 253.0000001192093, 1);
 	width:129px;
@@ -213,6 +230,13 @@ margin:0px;
 	top:175px;
 }
 .e32_13 { 
+	width:129px;
+	height:40px;
+	position:absolute;
+	left:1050px;
+	top:870px;
+}
+.e32_13_1 {
 	width:129px;
 	height:40px;
 	position:absolute;
