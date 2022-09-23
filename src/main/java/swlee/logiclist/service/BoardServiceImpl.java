@@ -24,6 +24,11 @@ public class BoardServiceImpl implements BoardService{
     public Board update(Board board) {
         return  boardRepository.update(board);
     }
+    @Override
+
+    public  List<Board> findByOrder(){
+        return boardRepository.findByOrder();
+    }
 
     @Override
     public Board findById(int id) {

@@ -65,6 +65,17 @@ class BoardServiceImplTest {
         }
         log.info("FindByName={}",sb.toString());
     }
+    @Test
+    void findByOrder(){
+        boardService.save(board);
+        List<Board> title = boardService.findByOrder();
+        assertThat(title).isNotNull();
+        StringBuilder sb = new StringBuilder();
+        for (Board ele : title) {
+            sb.append(ele.toString()+"\n");
+        }
+        log.info("FindByOrder={}",sb.toString());
+    }
 
     @Test
     void delete() {

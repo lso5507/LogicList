@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import swlee.logiclist.domain.Board;
 import swlee.logiclist.domain.User;
+import swlee.logiclist.service.BoardService;
 import swlee.logiclist.service.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -21,6 +24,8 @@ import java.security.Principal;
 public class ViewController {
     @Autowired
     private  UserService userservice;
+    @Autowired
+    private BoardService boardService;
     @GetMapping("/main")
     public String main(Principal principal,Model model){
 
@@ -30,6 +35,9 @@ public class ViewController {
             log.info("Principal::{}",principal.getName());
             model.addAttribute("user",principal.getName());
         }
+        List<Board> byOrder = boardService.findByOrder();
+        model.addAttribute("boards",byOrder);
+
         return "main";
     }
     @GetMapping("/login")

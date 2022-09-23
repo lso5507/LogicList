@@ -27,8 +27,9 @@
     </div>
     <div class="e31_11">
         <div class="e31_12"></div>
-        <div class="e31_13">
-            <span class="e31_17">LogicList</span></div>
+<!--        <div class="e31_13">-->
+<!--            <span class="e31_17">LogicList</span>-->
+<!--        </div>-->
 
         <div class="e31_32">
             <div class="e31_33"></div>
@@ -39,7 +40,7 @@
         <textarea id="title" cols="80"  placeholder="제목을 입력하세요." class="title"></textarea>
         <div class="content"></div>
         <div class="e32_13">
-            <button onclick="upload()" class="content_btn">둥록</button>
+            <button onclick="upload_confirm()" class="content_btn">둥록</button>
         </div>
         <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
         <script>
@@ -75,7 +76,11 @@
             }
         }
 
-
+        function upload_confirm(){
+            if(confirm("등록 하겠습니까?")){
+                upload()
+            }
+        }
         function upload(){
             let formData = new FormData();
             formData.append('content',editor.getMarkdown());
@@ -104,6 +109,5 @@
         </div>
     </div>
 </div>
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 </body>
 </html>
