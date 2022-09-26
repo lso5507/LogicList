@@ -1,0 +1,73 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+
+    <title>LogicList</title>
+    <meta name="description" content="Figma htmlGenerator">
+    <meta name="author" content="htmlGenerator">
+    <link href="https://fonts.googleapis.com/css?family=ABeeZee&display=swap" rel="stylesheet">
+
+    <link th:href="@{/css/board/list.css}" rel="stylesheet">
+
+    <style>
+              /*
+                Figma Background for illustrative/preview purposes only.
+                You can remove this style tag with no consequence
+              */
+              body {background: #E5E5E5; }
+
+    </style>
+
+</head>
+
+<body>
+<div class=e0_13>
+    <div class="e0_14"></div>
+    <div class=e0_17>
+        <div class="e0_18"></div>
+<!--        content-->
+<!--        <div class=e38_35>-->
+<!--            <div class="e35_left">-->
+<!--                <div class="content_title">제목입니다.</div>-->
+<!--            </div>-->
+<!--            <div class="e35_right">-->
+<!--                <span class="content_user">[[${user}]]</span>-->
+<!--                <div class="v-line"></div>-->
+<!--                <div class="content_count_div">-->
+<!--                    <span class="content_count">조회수 : 5</span>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="content">
+            <div class="e38_35" th:each="board : ${boards}">
+                <div class="e35_left">
+                    <span class="content_title" th:text="${board.title}"></span>
+                </div>
+                <div class="e35_right">
+                    <span class="content_user" th:text="${board.username}"></span>
+                    <div class="v-line"></div>
+                    <div class="content_count_div">
+                        <span class="content_count">조회수 : [[${board.clickCnt}]]</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="e38_105"></div>
+<!--        footer-->
+        <div class=e0_22>
+            <div class="e0_23"></div>
+            <span class="e0_26">Tistory </span><span class="e0_27">Github</span><span
+                class="e0_28">Instagram</span><span class="e0_24">LSW</span></div>
+        <div class=e0_60>
+<!--            <div class=e0_61>-->
+<!--                <div class="e0_62"></div>-->
+<!--                <span class="e0_63">Sign In</span></div>-->
+            <div class="e0_21"th:if="${user}">
+
+                <span class="e0_63">[[${user}]] 님 환영합니다.</span>
+            </div>
+        </div>
+        <span th:onclick="|location.href='@{/view/main}'|"   class="e14_118">LogicList</span></div>
+</div>
+</body>
+</html>

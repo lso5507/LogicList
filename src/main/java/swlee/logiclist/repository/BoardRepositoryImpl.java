@@ -62,7 +62,8 @@ public class BoardRepositoryImpl implements BoardRepository{
 
     @Override
     public List<Board> findByName(String keyword) {
-        final String sql = "SELECT * FROM board WHERE content=? OR title=?";
+        final String sql = "SELECT * FROM board WHERE content LIKE ? OR title LIKE ?";
+        keyword='%'+keyword+'%';
         List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper(),keyword,keyword);
         return findBoard;
     }

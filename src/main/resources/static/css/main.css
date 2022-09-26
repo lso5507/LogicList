@@ -368,6 +368,12 @@ margin:0px;
 	border-top-right-radius:2px;
 	border-bottom-left-radius:2px;
 	border-bottom-right-radius:2px;
+    font-family: ABeeZee;
+    text-align: center;
+    border: none;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 1);
+    letter-spacing: 0;
 }
 .e0_56 { 
 	color:rgba(255, 255, 255, 1);

@@ -12,6 +12,8 @@ import swlee.logiclist.Exception.IncorrectAccountException;
 import swlee.logiclist.domain.User;
 import swlee.logiclist.repository.UserRepository;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -54,6 +56,7 @@ class UserServiceImplTest {
         User byName = userService.findByName(user);
         Assertions.assertThat(byName).isNotNull();
     }
+
     @Test
     @DisplayName("없는 아이디 검색")
     void findByName_ex(){

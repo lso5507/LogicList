@@ -5,12 +5,17 @@ import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import swlee.logiclist.domain.Board;
 import swlee.logiclist.service.BoardService;
+import swlee.logiclist.utils.ScriptUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -21,6 +26,22 @@ public class BoardController {
     @GetMapping("/edit")
     public String edit(){
         return "board/edit";
+    }
+    @GetMapping("/list")
+    public String list(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String keyword = request.getParameter("keyword");
+        // 비정상 접근 핸들링
+        if(keyword.isBlank()||keyword.isEmpty()||keyword==null){
+            ScriptUtils.alertAndBackPage(response,"비정상적인 접근입니다.");
+        }
+        List<Board> boards = boardService.findByName(keyword);
+        if(boards.isEmpty()){
+            ScriptUtils.alertAndBackPage(response,"검색결과가 없습니다.");
+
+        }
+        model.addAttribute("boards",boards);
+
+        return "board/list";
     }
     @PostMapping("/edit")
     @ResponseBody
