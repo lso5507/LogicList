@@ -39,6 +39,7 @@ public class S3UploaderService {
      */
     @PostConstruct
     private void init(){
+        System.out.println("environment = " + environment);
         if(environment.equals("local")){
             this.fileDir = System.getProperty("user.dir") + this.rootDir;
         }

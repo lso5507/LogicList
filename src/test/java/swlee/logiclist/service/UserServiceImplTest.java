@@ -26,13 +26,13 @@ class UserServiceImplTest {
     private final String USER_A = "USER_A";
 
     //테스트 후 삭제
-    @AfterEach
-    void after()  {
-        userService.delete(USER_A);
-    }
+//    @AfterEach
+//    void after()  {
+//        userService.delete(USER_A);
+//    }
     @Test
-    void save() {
-        User user = new User(USER_A,"test");
+     void save() {
+        User user = new User("root","1111");
         User save = userService.save(user);
         log.info("USER PASSWORD ={}",user.getPassword());
         Assertions.assertThat(save).isNotNull();

@@ -55,7 +55,8 @@ public class Application {
 	// AWS사용을 위해 설정파일 인식 로직
 	public static final String APPLICATION_LOCATIONS = "spring.config.location="
 			+ "classpath:application.yml,"
-			+ "classpath:aws.yml";
+			+ "classpath:aws.yml,"
+			+ "classpath:application.properties";
 
 	public static void main(String[] args) {
 		new SpringApplicationBuilder(Application.class)
