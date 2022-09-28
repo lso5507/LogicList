@@ -8,6 +8,8 @@
     <link href="https://fonts.googleapis.com/css?family=ABeeZee&display=swap" rel="stylesheet">
 
     <link th:href="@{/css/board/list.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+
 
     <style>
               /*
@@ -21,53 +23,56 @@
 </head>
 
 <body>
-<div class=e0_13>
-    <div class="e0_14"></div>
-    <div class=e0_17>
-        <div class="e0_18"></div>
-<!--        content-->
-<!--        <div class=e38_35>-->
-<!--            <div class="e35_left">-->
-<!--                <div class="content_title">제목입니다.</div>-->
-<!--            </div>-->
-<!--            <div class="e35_right">-->
-<!--                <span class="content_user">[[${user}]]</span>-->
-<!--                <div class="v-line"></div>-->
-<!--                <div class="content_count_div">-->
-<!--                    <span class="content_count">조회수 : 5</span>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-        <div class="content">
-            <div class="e38_35" th:each="board : ${boards}">
-                <div class="e35_left">
-                    <span class="content_title" th:text="${board.title}"></span>
-                </div>
-                <div class="e35_right">
-                    <span class="content_user" th:text="${board.username}"></span>
-                    <div class="v-line"></div>
-                    <div class="content_count_div">
-                        <span class="content_count">조회수 : [[${board.clickCnt}]]</span>
+<div >
+    <div class="back_color">
+        <div class=main>
+            <!--        content-->
+            <!--        <div class=e38_35>-->
+            <!--            <div class="e35_left">-->
+            <!--                <div class="content_title">제목입니다.</div>-->
+            <!--            </div>-->
+            <!--            <div class="e35_right">-->
+            <!--                <span class="content_user">[[${user}]]</span>-->
+            <!--                <div class="v-line"></div>-->
+            <!--                <div class="content_count_div">-->
+            <!--                    <span class="content_count">조회수 : 5</span>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <div class="content">
+                <div class="e38_35" th:each="board : ${boards}" >
+                    <div class="e35_left">
+                        <a class="content_title" th:text="${board.title}" th:href="@{update(uid=${board.id})}"></a>
+                    </div>
+                    <div class="e35_right">
+                        <span class="content_user" th:text="${board.username}"></span>
+                        <div class="v-line"></div>
+                        <div class="content_count_div">
+                            <span class="content_count">조회수 : [[${board.clickCnt}]]</span>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="e38_105"></div>
-<!--        footer-->
-        <div class=e0_22>
-            <div class="e0_23"></div>
-            <span class="e0_26">Tistory </span><span class="e0_27">Github</span><span
-                class="e0_28">Instagram</span><span class="e0_24">LSW</span></div>
-        <div class=e0_60>
-<!--            <div class=e0_61>-->
-<!--                <div class="e0_62"></div>-->
-<!--                <span class="e0_63">Sign In</span></div>-->
-            <div class="e0_21"th:if="${user}">
+            <div class="e38_105"></div>
+            <!--        footer-->
+            <div class=footer>
+                <span class="e0_26">Tistory </span><span class="e0_27">Github</span><span
+                    class="e0_28">Instagram</span><span class="e0_24">LSW</span></div>
+            <div class=e0_60>
+                <!--            <div class=e0_61>-->
+                <!--                <div class="e0_62"></div>-->
+                <!--                <span class="e0_63">Sign In</span></div>-->
+                <div class="e0_21"th:if="${user}">
 
-                <span class="e0_63">[[${user}]] 님 환영합니다.</span>
+                    <span class="e0_63">[[${user}]] 님 환영합니다.</span>
+                </div>
             </div>
-        </div>
-        <span th:onclick="|location.href='@{/view/main}'|"   class="e14_118">LogicList</span></div>
+
+            <div class="logo">
+                <span th:onclick="|location.href='@{/view/main}'|"   class="logo_text">LogicList</span>
+            </div>
+    </div>
+
 </div>
 </body>
 </html>

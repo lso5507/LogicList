@@ -70,7 +70,7 @@ public class BoardRepositoryImpl implements BoardRepository{
     //최신 게시글 5개 긁어오기
     @Override
     public List<Board> findByOrder() {
-        final String sql = "SELECT * FROM BOARD order by created_at desc LIMIT 5";
+        final String sql = "SELECT * FROM BOARD order by created_at desc LIMIT 3";
         List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper());
         return findBoard;
     }

@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=ABeeZee&display=swap" rel="stylesheet">
 
     <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
 
     <style>
               /*
@@ -22,83 +23,84 @@
 
 <body>
 <div >
-    <div class="e0_14"></div>
-    <div class=e0_17>
-        <div class=e0_22>
-            <div class="e0_23"></div>
-            <span class="e0_26">Tistory </span><span class="e0_27">Github</span><span
-                class="e0_28">Instagram</span><span class="e0_24">LSW</span></div>
-        <div class=e12_32>
-
-            <div class=e0_43>
-                <div class="e0_44" th:each="board : ${boards}">
-                    <span class="content_item" th:text="${board.title}"></span>
+    <div class="back_color">
+        <div class=main>
+            <div class=e12_32>
+                <div class=e0_43>
+                    <div class="e0_44" th:each="board : ${boards}">
+                        <span class="content_item" th:text="${board.title}"></span>
+                    </div>
+                    <!--                <span class="e0_46">Calabasas, CA</span>-->
                 </div>
-<!--                <span class="e0_46">Calabasas, CA</span>-->
-            </div>
-            <form  th:action="@{/board/list}" class=e0_50>
-                <div class="e0_51"></div>
-                <div class=e0_54>
+                <form  th:action="@{/board/list}" class=e0_50>
+                    <div class="e0_51"></div>
                     <button class="e0_55" type="submit">Search</button>
-                </div>
-                <input class="e0_52" placeholder="Search For Tips" name="keyword" id="keyword">
-                <div class="e0_57"></div>
-                <div class=e1_139>
-                    <div class="e0_94"></div>
-                </div>
-            </form>
-        </div>
-        <div class=e12_33>
-            <div class=e12_34>
-                <div class=e12_36></div>
+
+                    <input class="e0_52" placeholder="Search For Tips" name="keyword" id="keyword">
+                    <div class="e0_57"></div>
+                    <div class=e1_139>
+                        <div class="e0_94"></div>
+                    </div>
+                </form>
             </div>
-            <div class=e12_42>
-                <div class="e12_43"></div>
-                <span class="e12_45">Calabasas, CA</span>
-                <div class=e14_114>
-                    <div class="e14_110"></div>
-                    <div class=e14_117>
-                        <div class="e14_116"></div>
+            <div class=e12_33>
+                <div class=e12_34>
+                    <div class=e12_36></div>
+                </div>
+                <div class=e12_42>
+                    <div class="e12_43"></div>
+                    <span class="e12_45">Calabasas, CA</span>
+                    <div class=e14_114>
+                        <div class="e14_110"></div>
+                        <div class=e14_117>
+                            <div class="e14_116"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class=e12_46>
+                    <div class="e12_47"></div>
+                    <div class=e12_48>
+                        <div class="e12_49"></div>
+                        <span class="e12_50">Submit</span></div>
+                    <span class="e12_51">Input TodoList...</span>
+                    <div class="e12_52"></div>
+                    <div class=e12_53>
+                        <div class="ei12_53_0_94"></div>
                     </div>
                 </div>
             </div>
-            <div class=e12_46>
-                <div class="e12_47"></div>
-                <div class=e12_48>
-                    <div class="e12_49"></div>
-                    <span class="e12_50">Submit</span></div>
-                <span class="e12_51">Input TodoList...</span>
-                <div class="e12_52"></div>
-                <div class=e12_53>
-                    <div class="ei12_53_0_94"></div>
+            <div class=e0_60>
+                <!--            <div class=e0_61>-->
+                <!--                <div class="e0_62"></div>-->
+                <!--                <span class="e0_63">Sign In</span></div>-->
+                <div class="e0_21"th:if="${user}">
+
+                    <span class="e0_63">[[${user}]] 님 환영합니다.</span>
+                </div>
+                <div class="e0_21"th:if="${user}">
+                    <button th:onclick="|location.href='@{/view/logout}'|"  class="button">Logout</button>
+                </div>
+                <div th:onclick="|location.href='@{/view/login}'|"     class="e0_62"th:unless="${user}">
+
+                    <a class="e0_63">Sign In</a>
                 </div>
             </div>
-        </div>
-        <div class=e0_60>
-<!--            <div class=e0_61>-->
-<!--                <div class="e0_62"></div>-->
-<!--                <span class="e0_63">Sign In</span></div>-->
-            <div class="e0_21"th:if="${user}">
-
-                <span class="e0_63">[[${user}]] 님 환영합니다.</span>
+            <div class=e12_29>
+                <div class="head_title">
+                    <span class="e0_58">개발 팁 및 TodoList</span>
+                    <button class="head_board" th:if="${user}" th:onclick="|location.href='@{/board/edit}'|" >POST</button>
+                </div>
+                <span class="e0_59">Find your Logic</span>
             </div>
-            <div class="e0_21"th:if="${user}">
-                <button th:onclick="|location.href='@{/view/logout}'|"  class="button">Logout</button>
+            <div class="logo">
+                <span th:onclick="|location.href='@{/view/main}'|"   class="logo_text">LogicList</span>
             </div>
-            <div th:onclick="|location.href='@{/view/login}'|"     class="e0_62"th:unless="${user}">
-
-                <a class="e0_63">Sign In</a>
+            <div class=footer>
+                <span class="e0_26">Tistory </span><span class="e0_27">Github</span>
+                <span class="e0_28">Instagram</span><span class="e0_24">LSW</span>
             </div>
         </div>
-        <div class=e12_29>
-            <div class="head_title">
-                <span class="e0_58">개발 팁 및 TodoList</span>
-                <button class="head_board" th:if="${user}" th:onclick="|location.href='@{/board/edit}'|" >POST</button>
-            </div>
-            <span class="e0_59">Find your Logic</span>
-        </div>
-
-        <span th:onclick="|location.href='@{/view/main}'|"   class="e14_118">LogicList</span></div>
+    </div>
 </div>
 </body>
 </html>

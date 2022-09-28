@@ -43,6 +43,22 @@ public class BoardController {
 
         return "board/list";
     }
+    @GetMapping("/update")
+    public String update_form(){
+        return "board/update";
+    }
+    @PostMapping("/update")
+    @ResponseBody
+    public String update(HttpServletRequest req, Principal principal){
+        log.info("update_content::{}",req.getParameter("content"));
+        //Board Binding
+        Board board = new Board(req.getParameter("title"),
+                req.getParameter("content"), 0, null, principal.getName());
+        Board save = boardService.update(board);
+        //JSON Response
+        String jsonStr = createJson(save);
+        return jsonStr;
+    }
     @PostMapping("/edit")
     @ResponseBody
     public String edit_post(HttpServletRequest req, Principal principal){
@@ -52,20 +68,27 @@ public class BoardController {
                 req.getParameter("content"), 0, null, principal.getName());
         Board save = boardService.save(board);
         //JSON Response
-        Gson gson = new Gson();
-        // Json key, value 추가
-         JsonObject jsonObject = new JsonObject();
-         if(save==null){
-             jsonObject.addProperty("result", "failed");
-
-         }else{
-             jsonObject.addProperty("result", "success");
-
-         }
-        // JsonObject를 Json 문자열로 변환
-         String jsonStr = gson.toJson(jsonObject);
-        // 생성된 Json 문자열 출력
-         System.out.println(jsonStr); // {"name":"anna","id":1}
+        String jsonStr = createJson(save);
         return jsonStr;
     }
+
+    private static String createJson(Board save) {
+        Gson gson = new Gson();
+        // Json key, value 추가
+        JsonObject jsonObject = new JsonObject();
+        if(save ==null){
+            jsonObject.addProperty("result", "failed");
+
+        }else{
+            jsonObject.addProperty("result", "success");
+
+        }
+        // JsonObject를 Json 문자열로 변환
+        String jsonStr = gson.toJson(jsonObject);
+        // 생성된 Json 문자열 출력
+        System.out.println(jsonStr); // {"name":"anna","id":1}
+        return jsonStr;
+    }
+
+
 }

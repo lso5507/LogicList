@@ -1,5 +1,4 @@
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="utf-8">
 
@@ -7,9 +6,9 @@
     <meta name="description" content="Figma htmlGenerator">
     <meta name="author" content="htmlGenerator">
     <link href="https://fonts.googleapis.com/css?family=ABeeZee&display=swap" rel="stylesheet">
-
-    <link th:href="@{/css/board/update.css}" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link th:href="@{/css/board/edit.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
 
     <style>
               /*
@@ -23,30 +22,91 @@
 </head>
 
 <body>
-<div class="e32_16">
-    <div class="e32_17">
-        <div class="e32_18"></div>
+<div>
+    <div class="back_color">
+        <div class="main">
+            <div class="logo">
+                <span th:onclick="|location.href='@{/view/main}'|"   class="logo_text">LogicList</span>
+            </div>
+            <textarea id="title" cols="80"  placeholder="제목을 입력하세요." class="title"></textarea>
+            <div class="content_div">
+                <div class="content">
+                </div>
+                <div class="btn_con">
+                    <button onclick="upload_confirm()" class="content_btn">둥록</button>
+                    <button onclick="cancel()" class="content_btn">취소</button>
+                </div>
+            </div>
+            <div class="footer">
+                <span class="e31_34">Tistory </span><span class="e31_35">Github</span>
+                <span class="e31_36">Instagram</span><span class="e31_37">LSW</span>
+            </div>
     </div>
-    <div class="e32_19">
-        <div class="e32_20"></div>
-        <div class="e32_21">
-            <div class=e32_22>
-                <div class="e32_23"></div>
-                <span class="e32_24">Sign In</span></div>
-            <span class="e32_25">LogicList</span></div>
-        <div class="e32_26"></div>
-        <div class=e32_27>
-            <div class="e32_28"></div>
-            <span class="e32_29">Tistory </span><span class="e32_30">Github</span><span
-                class="e32_31">Instagram</span><span class="e32_32">LSW</span></div>
-        <div class=e32_34>
-            <div class="e32_35"></div>
-            <span class="e32_36">삭제
-</span></div>
-        <div class=e32_37>
-            <div class="e32_38"></div>
-            <span class="e32_39">등록</span></div>
+
     </div>
 </div>
+        <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+        <script>
+        const editor = new toastui.Editor({
+        el: document.querySelector('.content'),
+        height: '65%',
+        initialValue: 'myLogicList',
+        initialEditType: 'wysiwyg'
+      });
+      // AWS S3 이미지 리턴 변수
+
+
+        //Image Upload
+        editor.addHook('addImageBlobHook', (blob, callback) => {
+            const formData = new FormData();
+                formData.append("multipartFiles", blob);
+                formData.append("data", blob);
+                fetch(location.origin.toString()+"/image-upload", {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    body: formData // body 부분에 폼데이터 변수를 할당
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    callback(data.result);
+                });
+            return false;
+            })
+        // 게시글 등록 취소
+        function cancel(){
+            if(confirm("작성을 취소하겠습니까?")){
+                location.href="/view/main";
+            }
+        }
+
+        function upload_confirm(){
+            if(confirm("등록 하겠습니까?")){
+                upload()
+            }
+        }
+        function upload(){
+            let formData = new FormData();
+            formData.append('content',editor.getMarkdown());
+            formData.append('title',document.getElementById('title').value);
+            console.log(editor.getMarkdown());
+            fetch(location.href.toString(), {
+                method: 'POST',
+                cache: 'no-cache',
+                body: formData // body 부분에 폼데이터 변수를 할당
+            })
+            .then((response) => response.json())
+            .then((data) => {
+               if(data.result=="success"){
+                alert("성공")
+                location.href="/view/main/";
+               }
+               else if(data.result=="failed"){
+                alert("실패")
+               }
+            });
+
+        }
+</script>
+
 </body>
 </html>

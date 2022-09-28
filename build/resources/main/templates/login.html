@@ -9,6 +9,8 @@
 
     <link th:href="@{/css/login.css}" rel="stylesheet">
 
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+
     <style>
               /*
                 Figma Background for illustrative/preview purposes only.
@@ -16,44 +18,44 @@
               */
               body {background: #E5E5E5; }
 
+
     </style>
 
 </head>
 
 <body>
-<div class=e14_15>
-    <div class=e14_226>
-        <div class="e14_16"></div>
-    </div>
-    <div class=e14_19>
-        <div class="e14_20"></div>
-        <div class=e14_71>
-            <div class=e14_72>
-                <div class="e14_73"></div>
-                <span class="e14_74">Sign In</span></div>
-            <span th:onclick="|location.href='@{/view/main}'|"   class="e14_151">LogicList</span></div>
-        <div class=e14_77><span class="e14_78">개발 팁 및 TodoList</span><span class="e14_79">Find your Logic</span></div>
-        <div class="e14_80"></div>
-        <div class=e14_89>
-            <form th:action="@{/view/login}" method="POST">
-                <div class=e14_93>
-                    <button class="e14_94"type="submit">Login</button>
-                </div>
-                <div class=e14_97>
-                    <input class="e14_91" type="password" id="password" name="password"placeholder="패스워드를 입력하세요."/>
-                </div>
-                <div class=e14_100>
-                    <input class="e14_101" type="text" id="username" name="username"placeholder="아이디를 입력하세요."/>
-                </div>
-            </form>
+<div>
+    <div class=back_color>
+        <div class=main>
+
+            <div class="logo">
+                <span th:onclick="|location.href='@{/view/main}'|" class="logo_text">LogicList</span>
+            </div>
+            <div class=e14_77><span class="e14_78">개발 팁 및 TodoList</span><span class="e14_79">Find your Logic</span>
+            </div>
+            <div class="e14_80"></div>
+            <div class=e14_89>
+                <form th:action="@{/view/login}" method="POST">
+                    <div class=e14_93>
+                        <button class="e14_94" type="submit">Login</button>
+                    </div>
+                    <div class=e14_97>
+                        <input class="e14_91" type="password" id="password" name="password" placeholder="패스워드를 입력하세요."/>
+                    </div>
+                    <div class=e14_100>
+                        <input class="e14_101" type="text" id="username" name="username" placeholder="아이디를 입력하세요."/>
+                    </div>
+                </form>
 
 
+            </div>
+            <div class=footer>
+                <span class="e14_105">Tistory </span><span class="e14_106">Github</span><span
+                    class="e14_107">Instagram</span><span class="e14_108">LSW</span>
+            </div>
         </div>
-        <div class=e14_103>
-            <div class="e14_104"></div>
-            <span class="e14_105">Tistory </span><span class="e14_106">Github</span><span
-                class="e14_107">Instagram</span><span class="e14_108">LSW</span></div>
     </div>
+
 </div>
 </body>
 </html>
