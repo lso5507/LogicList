@@ -80,7 +80,10 @@
         }
 
         function upload_confirm(){
-            if(confirm("등록 하겠습니까?")){
+            if(document.getElementById('title').value.trim()==""){
+                alert("제목을 입력해주세요.");
+            }
+            else if(confirm("등록 하겠습니까?")){
                 upload()
             }
         }

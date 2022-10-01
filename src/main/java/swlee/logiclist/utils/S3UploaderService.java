@@ -1,5 +1,6 @@
 package swlee.logiclist.utils;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -72,13 +73,31 @@ public class S3UploaderService {
 
     // 로컬에 저장된 이미지 지우기
     private void removeNewFile(File targetFile) {
+
         if (targetFile.delete()) {
             log.info("File delete success");
             return;
         }
+
+
         log.info("File delete fail");
     }
 
+    /**
+     * AWS S3에 저장된 이미지 삭제
+     */
+
+    public void removeS3File(String fileName,String bucket){
+        log.info("file name : "+ fileName);
+        try {
+            amazonS3Client.deleteObject(bucket, (fileName).replace(File.separatorChar, '/'));
+            //삭제되었는지 확인
+            boolean result = amazonS3Client.doesObjectExist("logiclist", fileName);
+            log.info("remove Result::{}",!result);
+        } catch (AmazonServiceException e) {
+            log.error(e.getErrorMessage());
+        }
+    }
     /**
      * @param multipartFile
      * 로컬에 파일 저장하기

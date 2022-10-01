@@ -72,6 +72,7 @@ public class BoardController {
         return jsonStr;
     }
 
+
     private static String createJson(Board save) {
         Gson gson = new Gson();
         // Json key, value 추가

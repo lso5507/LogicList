@@ -46,5 +46,11 @@ public class S3UploaderController {
         return jsonStr;
 
     }
+    @PostMapping("image-delete")
+    @ResponseBody
+    public String delete_image(@RequestParam("data") String fileName){
+        s3UploaderService.removeS3File("image/"+fileName,"logiclist");
 
+        return "success";
+    }
 }

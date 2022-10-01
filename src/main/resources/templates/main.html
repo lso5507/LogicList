@@ -25,6 +25,9 @@
 <div >
     <div class="back_color">
         <div class=main>
+            <div class="logo">
+                <span th:onclick="|location.href='@{/view/main}'|"   class="logo_text">LogicList</span>
+            </div>
             <div class=e12_32>
                 <div class=e0_43>
                     <div class="e0_44" th:each="board : ${boards}">
@@ -92,9 +95,7 @@
                 </div>
                 <span class="e0_59">Find your Logic</span>
             </div>
-            <div class="logo">
-                <span th:onclick="|location.href='@{/view/main}'|"   class="logo_text">LogicList</span>
-            </div>
+
             <div class=footer>
                 <span class="e0_26">Tistory </span><span class="e0_27">Github</span>
                 <span class="e0_28">Instagram</span><span class="e0_24">LSW</span>
