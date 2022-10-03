@@ -31,7 +31,7 @@
             <div class=e12_32>
                 <div class=e0_43>
                     <div class="e0_44" th:each="board : ${boards}">
-                        <span class="content_item" th:text="${board.title}"></span>
+                        <span class="content_item" th:onclick="|location.href='@{/board/update(bid=${board.id})}'|"th:text="${board.title}"></span>
                     </div>
                     <!--                <span class="e0_46">Calabasas, CA</span>-->
                 </div>

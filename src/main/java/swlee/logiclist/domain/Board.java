@@ -5,7 +5,6 @@ import lombok.Data;
 import java.util.Date;
 
 @Data
-
 public class Board {
     /**
      * id - 게시글번호
@@ -24,6 +23,7 @@ public class Board {
     private Date date;
 
     public Board(int id, String title, String content, int clickCnt, String image, String username) {
+        this.id=id;
         this.title = title;
         this.content = content;
         this.clickCnt = clickCnt;

@@ -22,6 +22,9 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public Board update(Board board) {
+
+
+
         return  boardRepository.update(board);
     }
     @Override

@@ -88,12 +88,14 @@ public class S3UploaderService {
      */
 
     public void removeS3File(String fileName,String bucket){
+        //File  not Exist
+        if(!amazonS3Client.doesObjectExist("logiclist", fileName)){
+            log.error("AWS S3 Error!!! :: File not Exist!!");
+
+        }
         log.info("file name : "+ fileName);
         try {
             amazonS3Client.deleteObject(bucket, (fileName).replace(File.separatorChar, '/'));
-            //삭제되었는지 확인
-            boolean result = amazonS3Client.doesObjectExist("logiclist", fileName);
-            log.info("remove Result::{}",!result);
         } catch (AmazonServiceException e) {
             log.error(e.getErrorMessage());
         }

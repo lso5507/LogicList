@@ -44,7 +44,10 @@ public class BoardController {
         return "board/list";
     }
     @GetMapping("/update")
-    public String update_form(){
+    public String update_form(HttpServletRequest req,Model model){
+        int id = Integer.parseInt(req.getParameter("bid"));
+        Board result = boardService.findById(id);
+        model.addAttribute("board",result);
         return "board/update";
     }
     @PostMapping("/update")
@@ -52,7 +55,7 @@ public class BoardController {
     public String update(HttpServletRequest req, Principal principal){
         log.info("update_content::{}",req.getParameter("content"));
         //Board Binding
-        Board board = new Board(req.getParameter("title"),
+        Board board = new Board(Integer.parseInt(req.getParameter("bid")),req.getParameter("title"),
                 req.getParameter("content"), 0, null, principal.getName());
         Board save = boardService.update(board);
         //JSON Response

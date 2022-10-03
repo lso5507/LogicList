@@ -28,9 +28,11 @@
             <div class="logo">
                 <span th:onclick="|location.href='@{/view/main}'|"   class="logo_text">LogicList</span>
             </div>
-            <textarea id="title" cols="80"  placeholder="제목을 입력하세요." class="title"></textarea>
+            <input type="hidden"  id="bid" th:value="${board.id}">
+            <textarea cols="80"  placeholder="제목을 입력하세요." class="title" id="title" th:text="${board.title}"></textarea>
             <div class="content_div">
-                <div class="content">
+                <div id="old_content" th:value="${board.content}">
+                <div class="content" id="content" th:text="${board.content}">
                 </div>
                 <div class="btn_con">
                     <button onclick="upload_confirm()" class="content_btn">둥록</button>
@@ -46,13 +48,18 @@
     </div>
 </div>
         <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-        <script>
+        <script th:inline="javascript">
+        /*<![CDATA[*/
+         const content = /*[[${board.content}]]*/;
         const editor = new toastui.Editor({
         el: document.querySelector('.content'),
         height: '65%',
-        initialValue: 'myLogicList',
+        initialValue: content,
         initialEditType: 'wysiwyg'
       });
+      /*]]>*/
+    </script>
+    <script>
       // AWS S3 이미지 리턴 변수
 
 
@@ -72,6 +79,7 @@
                 });
             return false;
             })
+
         // 게시글 등록 취소
         function cancel(){
             if(confirm("작성을 취소하겠습니까?")){
@@ -87,6 +95,7 @@
         function upload(){
             let formData = new FormData();
             formData.append('content',editor.getMarkdown());
+            formData.append('old_content',document.getElementById('old_content').value);
             formData.append('title',document.getElementById('title').value);
             console.log(editor.getMarkdown());
             fetch(location.href.toString(), {

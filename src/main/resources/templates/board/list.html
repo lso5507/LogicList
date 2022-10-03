@@ -42,7 +42,7 @@
             <div class="content">
                 <div class="e38_35" th:each="board : ${boards}" >
                     <div class="e35_left">
-                        <a class="content_title" th:text="${board.title}" th:href="@{update(uid=${board.id})}"></a>
+                        <a class="content_title" th:text="${board.title}" th:href="@{update(bid=${board.id})}"></a>
                     </div>
                     <div class="e35_right">
                         <span class="content_user" th:text="${board.username}"></span>
