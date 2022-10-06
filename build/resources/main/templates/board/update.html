@@ -31,9 +31,8 @@
             <input type="hidden"  id="bid" th:value="${board.id}">
             <textarea cols="80"  placeholder="제목을 입력하세요." class="title" id="title" th:text="${board.title}"></textarea>
             <div class="content_div">
-                <div id="old_content" th:value="${board.content}">
-                <div class="content" id="content" th:text="${board.content}">
-                </div>
+                <input  type="hidden"id="old_content" th:value="${board.content}">
+                <div class="content" id="content" th:text="${board.content}"></div>
                 <div class="btn_con">
                     <button onclick="upload_confirm()" class="content_btn">둥록</button>
                     <button onclick="cancel()" class="content_btn">취소</button>
@@ -60,6 +59,7 @@
       /*]]>*/
     </script>
     <script>
+        let imageArr =[];
       // AWS S3 이미지 리턴 변수
 
 
@@ -75,6 +75,7 @@
                 })
                 .then((response) => response.json())
                 .then((data) => {
+                    imageArr.push(data);
                     callback(data.result);
                 });
             return false;
@@ -89,13 +90,35 @@
 
         function upload_confirm(){
             if(confirm("등록 하겠습니까?")){
+                imageDelete();
                 upload()
             }
+        }
+        function imageDelete(){
+            let formData = new FormData();
+                formData.append('content',editor.getMarkdown());
+                formData.append('old_content',document.getElementById('old_content').value);
+                console.log(editor.getMarkdown());
+                fetch(location.origin.toString()+"/image-delete", {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    body: formData // body 부분에 폼데이터 변수를 할당
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                   if(data.result=="success"){
+                    return true;
+                   }
+                   else if(data.result=="failed"){
+                    alert("이미지 삽입실패")
+                    return false;
+                   }
+                });
         }
         function upload(){
             let formData = new FormData();
             formData.append('content',editor.getMarkdown());
-            formData.append('old_content',document.getElementById('old_content').value);
+            formData.append('imgArr',imageArr);
             formData.append('title',document.getElementById('title').value);
             console.log(editor.getMarkdown());
             fetch(location.href.toString(), {

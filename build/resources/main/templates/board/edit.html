@@ -53,6 +53,8 @@
         initialValue: 'myLogicList',
         initialEditType: 'wysiwyg'
       });
+
+      let imageArr =[];
       // AWS S3 이미지 리턴 변수
 
 
@@ -68,6 +70,7 @@
                 })
                 .then((response) => response.json())
                 .then((data) => {
+                    imageArr.push(data.result);
                     callback(data.result);
                 });
             return false;
@@ -84,12 +87,35 @@
                 alert("제목을 입력해주세요.");
             }
             else if(confirm("등록 하겠습니까?")){
+                imageCheck();
                 upload()
             }
+        }
+        function imageCheck(){
+            let formData = new FormData();
+            formData.append('content',editor.getMarkdown());
+            formData.append('imgArr',imageArr);
+            console.log(editor.getMarkdown());
+            fetch(location.origin.toString()+"/image-delete", {
+                method: 'POST',
+                cache: 'no-cache',
+                body: formData // body 부분에 폼데이터 변수를 할당
+            })
+            .then((response) => response.json())
+            .then((data) => {
+               if(data.result=="success"){
+                alert("성공")
+                location.href="/view/main/";
+               }
+               else if(data.result=="failed"){
+                alert("실패")
+               }
+            });
         }
         function upload(){
             let formData = new FormData();
             formData.append('content',editor.getMarkdown());
+            formData.append('imgArr',imageArr);
             formData.append('title',document.getElementById('title').value);
             console.log(editor.getMarkdown());
             fetch(location.href.toString(), {

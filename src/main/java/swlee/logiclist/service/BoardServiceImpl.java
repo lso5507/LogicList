@@ -11,6 +11,7 @@ import java.util.List;
 @Service
 @Slf4j
 public class BoardServiceImpl implements BoardService{
+
     @Autowired
     BoardRepository boardRepository;
 

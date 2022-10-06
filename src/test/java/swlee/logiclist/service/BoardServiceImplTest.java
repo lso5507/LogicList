@@ -35,6 +35,20 @@ class BoardServiceImplTest {
     }
 
     @Test
+    void update_test(){
+        String content="![](https://logiclist.s3.ap-northeast-2.amazonaws.com/image/258dab66-f537-42f3-aec6-f1e79a5c44f0474db10e-10e4-433a-a374-83b03a1d0dd5.bmp)\n" +
+                "test입니다\n";
+        String newContent ="![](https://logiclist.s3.ap-northeast-2.amazonaws.com/image/258dab66-f537-42f3-aec6-f1e79a5c44f0474db22210e-10e4-433a-a374-83b03a1d0dd5.bmp)\n" +
+                "tes22t입니다\n";
+        //URL만 긁어오기
+        String[] split = content.split("https://logiclist.s3.ap-northeast-2.amazonaws.com/image/");
+        //split for문
+        for (String s : split) {
+            log.info("s = {}",s);
+        }
+
+    }
+    @Test
     void update() {
         boardService.save(board);
         final String title = "UpdateTitle";

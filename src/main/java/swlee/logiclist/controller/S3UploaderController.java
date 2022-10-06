@@ -34,23 +34,28 @@ public class S3UploaderController {
     public String imageUpload(@RequestParam("data") MultipartFile multipartFile) throws IOException {
         log.info("imageUpload IN");
         String result = s3UploaderService.upload(multipartFile, "logiclist", "image");
+        String jsonData = toJson(result);
+        return jsonData;
+
+    }
+    @PostMapping("image-delete")
+    @ResponseBody
+    public String delete_image(@RequestParam("content") String content,@RequestParam("imgArr") String imgArr){
+//        String result = s3UploaderService.removeS3File( content,imgArr, "logiclist");
+//        String jsonData = toJson(result);
+        return null;
+    }
+
+    private String toJson(String result) {
         //JSON Response
         Gson gson = new Gson();
         // Json key, value 추가
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("result", result);
+        jsonObject.addProperty("result",result);
         // JsonObject를 Json 문자열로 변환
         String jsonStr = gson.toJson(jsonObject);
         // 생성된 Json 문자열 출력
         log.info("JSONSTR::{}",jsonStr);
         return jsonStr;
-
-    }
-    @PostMapping("image-delete")
-    @ResponseBody
-    public String delete_image(@RequestParam("data") String fileName){
-        s3UploaderService.removeS3File("image/"+fileName,"logiclist");
-
-        return "success";
     }
 }
