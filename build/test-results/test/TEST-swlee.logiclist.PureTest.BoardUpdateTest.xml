@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="swlee.logiclist.PureTest.BoardUpdateTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-10-05T06:18:47" hostname="DESKTOP-O5GGEIM" time="0.025">
+<testsuite name="swlee.logiclist.PureTest.BoardUpdateTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-10-07T10:03:44" hostname="iseog-un-ui-MacBookPro.local" time="0.031">
   <properties/>
-  <testcase name="test()" classname="swlee.logiclist.PureTest.BoardUpdateTest" time="0.025"/>
-  <system-out><![CDATA[substring = https://logiclist.s3.ap-northeast-2.amazonaws.com/image/1.bmp
+  <testcase name="test()" classname="swlee.logiclist.PureTest.BoardUpdateTest" time="0.031"/>
+  <system-out><![CDATA[data = image/4562be21-d31c-4f6e-919d-450f9bcb4d4579217e47-98ae-4fe0-9901-1b0806871358.png
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

@@ -40,10 +40,18 @@ public class S3UploaderController {
     }
     @PostMapping("image-delete")
     @ResponseBody
-    public String delete_image(@RequestParam("content") String content,@RequestParam("imgArr") String imgArr){
-//        String result = s3UploaderService.removeS3File( content,imgArr, "logiclist");
-//        String jsonData = toJson(result);
-        return null;
+    public String delete_image(@RequestParam("imgArr") String[] imgArr){
+        if(imgArr==null){
+            log.error("Empty Image");
+            return "failed";
+        }
+        for(String img:imgArr){
+            log.info("img::{}",img);
+        }
+
+        String result = s3UploaderService.removeS3File(imgArr, "logiclist");
+        String jsonData = toJson(result);
+        return jsonData;
     }
 
     private String toJson(String result) {

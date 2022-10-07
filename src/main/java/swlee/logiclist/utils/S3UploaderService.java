@@ -83,52 +83,27 @@ public class S3UploaderService {
         log.info("File delete fail");
     }
 
-    public void removeS3File(String content,String imgArr ,String bucket){
 
-        // 파일이름이 없으면 삭제하지 않음
-        if(content == null || content.equals("")){
-            return;
-        }else{
-            //https 이전 부분 제거
-            //) 부분제거
-            content = content.substring(content.lastIndexOf("logiclist.s3 ")+1,content.lastIndexOf(")"));
 
+    public String removeS3File(String[] fileNames,String bucket){
+        for(String file : fileNames){
+            String fileName=file.substring(file.indexOf("image"));
+            //File  not Exist
+            if(!amazonS3Client.doesObjectExist("logiclist", fileName)){
+                log.error("AWS S3 Error!!! :: File not Exist!!");
+                return "failed";
+            }
+            log.info("file name : "+ fileName);
+            try {
+                amazonS3Client.deleteObject(bucket, fileName);
+            } catch (AmazonServiceException e) {
+                log.error(e.getErrorMessage());
+                return "failed";
+            }
         }
-        //File  not Exist
-        if(!amazonS3Client.doesObjectExist("logiclist", content)){
-            log.error("AWS S3 Error!!! :: File not Exist!!");
+        return "success";
 
-        }
-        log.info("file name : "+ content);
-        try {
-            amazonS3Client.deleteObject(bucket, (content).replace(File.separatorChar, '/'));
-        } catch (AmazonServiceException e) {
-            log.error(e.getErrorMessage());
-        }
-    }
 
-    // MultipartFile -> File
-    public void removeS3File(String fileName,String bucket){
-        // 파일이름이 없으면 삭제하지 않음
-        if(fileName == null || fileName.equals("")){
-            return;
-        }else{
-            //https 이전 부분 제거
-            //) 부분제거
-            fileName = fileName.substring(fileName.lastIndexOf("https")+1,fileName.lastIndexOf(")"));
-
-        }
-        //File  not Exist
-        if(!amazonS3Client.doesObjectExist("logiclist", fileName)){
-            log.error("AWS S3 Error!!! :: File not Exist!!");
-
-        }
-        log.info("file name : "+ fileName);
-        try {
-            amazonS3Client.deleteObject(bucket, (fileName).replace(File.separatorChar, '/'));
-        } catch (AmazonServiceException e) {
-            log.error(e.getErrorMessage());
-        }
     }
     /**
      * @param multipartFile

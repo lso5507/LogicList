@@ -66,7 +66,6 @@ public class BoardController {
     @ResponseBody
     public String edit_post(HttpServletRequest req, Principal principal){
         log.info("content::{}",req.getParameter("content"));
-        log.info("imgArr::{}",req.getParameter("imgArr"));
 
         //Board Binding
         Board board = new Board(req.getParameter("title"),

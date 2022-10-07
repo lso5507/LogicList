@@ -16,13 +16,15 @@ public class BoardUpdateTest {
             String newContent ="![](https://logiclist.s3.ap-northeast-2.amazonaws.com/image/258dab66-f537-42f3-aec6-f1e79a5c44f0474db22210e-10e4-433a-a374-83b03a1d0dd5.bmp)\n" +
                     "tes22t입니다\n";
         String substring = content.substring(content.indexOf("logiclist.s3")-8, content.indexOf(")"));
-        System.out.println("substring = " + substring);
+//        System.out.println("substring = " + substring);
 //            String[] result = imageFilter(content, newContent);
 //            // result for
 //            for (String s : result) {
 //                log.info("s = {}",s);
 //            }
-
+        String data="https://logiclist.s3.ap-northeast-2.amazonaws.com/image/4562be21-d31c-4f6e-919d-450f9bcb4d4579217e47-98ae-4fe0-9901-1b0806871358.png";
+        data=data.substring(data.indexOf("image"));
+        System.out.println("data = " + data);
 
     }
 

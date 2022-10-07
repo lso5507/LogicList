@@ -6,5 +6,8 @@ public class SystemUser {
     @Test
     void test(){
         System.out.println(System.getProperty("user.name"));
+        String os = System.getProperty("os.name").toLowerCase();
+        System.out.println("os = " + os);
+
     }
 }

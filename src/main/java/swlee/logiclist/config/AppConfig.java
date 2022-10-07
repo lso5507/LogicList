@@ -12,7 +12,15 @@ public class AppConfig {
         //사용자이름 가져오기
         String password="";
         if(System.getProperty("user.name").equals("swlee"));{
-            password="1111";
+            //OS 체크
+            String os = System.getProperty("os.name").toLowerCase();
+            //os 가 mac을 포함
+            if(os.contains("mac")){
+                password="";
+            }else{
+                password="1111";
+
+            }
         }
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUsername("sa");
