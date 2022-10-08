@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link th:href="@{/css/board/edit.css}" rel="stylesheet">
     <link th:href="@{/css/common.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/image.js}"></script>
+    <script type="text/javascript" th:src="@{/js/window.js}"></script>
+
+
+
 
     <style>
               /*
@@ -90,51 +95,17 @@
                 upload()
             }
         }
-        function imageDelete(arr){
-            let formData = new FormData();
-            formData.append('imgArr',arr);
-            console.log(editor.getMarkdown());
-            fetch(location.origin.toString()+"/image-delete", {
-                method: 'POST',
-                cache: 'no-cache',
-                body: formData // body 부분에 폼데이터 변수를 할당
-            })
-            .then((response) => response.json())
-            .then((data) => {
-               if(data.result=="success"){
-              
-               }
-               else if(data.result=="failed"){
-                alert("실패")
-               }
-            });
-        }
-        <!-- 본문 이미지 주소와 imgArr비교하여 삭제요청        -->
-        function imageFilter(ele,imgArr){
-            let result=imgArr;
-            let contentStr=ele.split("![]").filter(str=>str.includes("https://logiclist"));
-            for(let j=0;j<contentStr.length;j++){
-                    contentStr[j]=contentStr[j].substring(contentStr[j].indexOf("(")+1,contentStr[j].indexOf(")"));
-            }
-            for(let i=0;i<imgArr.length;i++){
-                for(let j=0;j<contentStr.length;j++){
-                    if(imgArr[i]===contentStr[j]){
-                        result.splice(i,1)
-                        console.log("Delete Element::"+imgArr[i]);
-                    }
-                }
-            }
 
-            return result;
-
-        }
         function upload(){
             let formData = new FormData();
             formData.append('content',editor.getMarkdown());
             formData.append('title',document.getElementById('title').value);
             console.log(editor.getMarkdown());
             let deleteImageArr=imageFilter(editor.getMarkdown(),imageArr);
-            imageDelete(deleteImageArr);
+            if(!imageDelete(deleteImageArr)){
+                console.log("이미지 삭제 실패");
+                return ;
+            }
             fetch(location.href.toString(), {
                 method: 'POST',
                 cache: 'no-cache',

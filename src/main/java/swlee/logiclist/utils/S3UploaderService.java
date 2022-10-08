@@ -86,7 +86,12 @@ public class S3UploaderService {
 
 
     public String removeS3File(String[] fileNames,String bucket){
+        if(fileNames.length == 0){
+            log.error("fileNames is empty");
+            return "failed";
+        }
         for(String file : fileNames){
+            log.info("file::{}",file);
             String fileName=file.substring(file.indexOf("image"));
             //File  not Exist
             if(!amazonS3Client.doesObjectExist("logiclist", fileName)){

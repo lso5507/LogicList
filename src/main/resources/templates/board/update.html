@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link th:href="@{/css/board/edit.css}" rel="stylesheet">
     <link th:href="@{/css/common.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/image.js}"></script>
+
 
     <style>
               /*
@@ -48,8 +50,12 @@
 </div>
         <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
         <script th:inline="javascript">
+        let imageArr =[];
+
         /*<![CDATA[*/
          const content = /*[[${board.content}]]*/;
+         imageArr=contentToArray(content)
+         console.log("initImageArr::"+imageArr);
         const editor = new toastui.Editor({
         el: document.querySelector('.content'),
         height: '65%',
@@ -59,10 +65,7 @@
       /*]]>*/
     </script>
     <script>
-        let imageArr =[];
       // AWS S3 이미지 리턴 변수
-
-
         //Image Upload
         editor.addHook('addImageBlobHook', (blob, callback) => {
             const formData = new FormData();
@@ -75,7 +78,7 @@
                 })
                 .then((response) => response.json())
                 .then((data) => {
-                    imageArr.push(data);
+                    imageArr.push(data.result);
                     callback(data.result);
                 });
             return false;
@@ -90,36 +93,21 @@
 
         function upload_confirm(){
             if(confirm("등록 하겠습니까?")){
-                imageDelete();
                 upload()
             }
-        }
-        function imageDelete(){
-            let formData = new FormData();
-                formData.append('content',editor.getMarkdown());
-                formData.append('old_content',document.getElementById('old_content').value);
-                console.log(editor.getMarkdown());
-                fetch(location.origin.toString()+"/image-delete", {
-                    method: 'POST',
-                    cache: 'no-cache',
-                    body: formData // body 부분에 폼데이터 변수를 할당
-                })
-                .then((response) => response.json())
-                .then((data) => {
-                   if(data.result=="success"){
-                    return true;
-                   }
-                   else if(data.result=="failed"){
-                    alert("이미지 삽입실패")
-                    return false;
-                   }
-                });
         }
         function upload(){
             let formData = new FormData();
             formData.append('content',editor.getMarkdown());
-            formData.append('imgArr',imageArr);
             formData.append('title',document.getElementById('title').value);
+            <!-- 수정된 이미지 배열            -->
+             console.log("uploadImageArr::"+imageArr);
+
+            let deleteImageArr=imageFilter(editor.getMarkdown(),imageArr);
+            if(!imageDelete(deleteImageArr)){
+                console.log("ImageDeleteFailed");
+                return ;
+            }
             console.log(editor.getMarkdown());
             fetch(location.href.toString(), {
                 method: 'POST',
