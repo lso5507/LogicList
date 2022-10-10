@@ -1,21 +1,23 @@
 package swlee.logiclist.controller;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import swlee.logiclist.domain.Board;
+import swlee.logiclist.domain.Todo;
 import swlee.logiclist.domain.User;
 import swlee.logiclist.service.BoardService;
+import swlee.logiclist.service.TodoService;
 import swlee.logiclist.service.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -26,6 +28,9 @@ public class ViewController {
     private  UserService userservice;
     @Autowired
     private BoardService boardService;
+    // TODOService-> 추후 분리필요
+    @Autowired
+    private TodoService todoService;
     @GetMapping("/main")
     public String main(Principal principal,Model model){
 
@@ -44,6 +49,17 @@ public class ViewController {
     public String login(User user){
         log.info("ViewController In Login");
         return "login";
+    }
+    @GetMapping("/todo")
+    public String todo(){
+        log.info("Todo Test");
+        return "todo_test";
+    }
+    @PostMapping("/todo")
+    public String todo_post(@RequestBody @NotNull Todo todo){
+        log.info("Todo_POst Test{}",todo);
+        todoService.save(todo);
+        return "todo_test";
     }
 
     /*

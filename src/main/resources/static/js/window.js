@@ -5,4 +5,10 @@ alert("뒤로가기 버튼을 눌렀습니다.");
   history.back();   // pushState로 인하여 페이지가 하나 더 생성되기 떄문에 한번에 뒤로가기 위해서 뒤로가기를 한번 더 해줍니다.
 
  };
+// 종료 이벤트
+window.onbeforeunload = function(event) {
+    event.preventDefault();
+    event.returnValue = "";
+    return "";
 
+}
