@@ -8,17 +8,19 @@ group = 'swlee.logiclist'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
+//configurations {
+//	compileOnly {
+//		extendsFrom annotationProcessor
+//	}
+//	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
+//}
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
+
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -38,6 +40,10 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
 	//JSON Response
 	implementation 'com.google.code.gson:gson:2.9.1'
+	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
+	compileOnly("org.springframework.boot:spring-boot-devtools")
+
+
 
 
 }

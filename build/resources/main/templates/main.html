@@ -23,14 +23,26 @@
 </head>
 
 <body>
-<script>
-    testAlert();
-</script>
+
 <div >
     <div class="back_color">
         <div class=main>
             <div class="logo">
                 <span th:onclick="|location.href='@{/view/main}'|"   class="logo_text">LogicList</span>
+                <div class=logo_right>
+                    <!--            <div class=e0_61>-->
+                    <!--                <div class="e0_62"></div>-->
+                    <!--                <span class="e0_63">Sign In</span></div>-->
+                    <div class="logo_user"th:if="${user}">
+                        <span class="logo_user_text">[[${user}]] 님 환영합니다.</span>
+                    </div>
+                    <div class="logo_btn"th:if="${user}">
+                        <button th:onclick="|location.href='@{/view/logout}'|"  class="button">Logout</button>
+                    </div>
+                    <div th:onclick="|location.href='@{/view/login}'|"     class="logo_btn"th:unless="${user}">
+                        <button class="button">Sign In</button>
+                    </div>
+                </div>
             </div>
             <div class=e12_32>
                 <div class=e0_43>
@@ -76,22 +88,7 @@
                     </div>
                 </div>
             </div>
-            <div class=e0_60>
-                <!--            <div class=e0_61>-->
-                <!--                <div class="e0_62"></div>-->
-                <!--                <span class="e0_63">Sign In</span></div>-->
-                <div class="e0_21"th:if="${user}">
 
-                    <span class="e0_63">[[${user}]] 님 환영합니다.</span>
-                </div>
-                <div class="e0_21"th:if="${user}">
-                    <button th:onclick="|location.href='@{/view/logout}'|"  class="button">Logout</button>
-                </div>
-                <div th:onclick="|location.href='@{/view/login}'|"     class="e0_62"th:unless="${user}">
-
-                    <a class="e0_63">Sign In</a>
-                </div>
-            </div>
             <div class=e12_29>
                 <div class="head_title">
                     <span class="e0_58">개발 팁 및 TodoList</span>

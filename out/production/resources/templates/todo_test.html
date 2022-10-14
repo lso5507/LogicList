@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--TodoList-->
+<div class="todoList">
+    <div class="todoList__header">
+        <h1 class="todoList__title">Todo List</h1>
+        <div class="todoList__input">
+            <input type="text" id="todoList__input__text" placeholder="할 일을 입력하세요">
+            <button id="todoList__input__button" >추가</button>
+        </div>
+    </div>
+    <div class="todoList__body">
+        <ul id="todoList__body__list">
+            <li class="todoList__body__list_content">
+                <div class="todoList__body__list__item__text">할 일</div>
+                <div class="todoList__body__list__item__button">
+                    <button class="todoList__body__list__item__button__complete">완료</button>
+                    <button class="todoList__body__list__item__button__delete">삭제</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript"  defer th:src="@{/js/todoList.js}"></script>
+<script>
+</script>
+</body>
+</html>

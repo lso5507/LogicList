@@ -34,6 +34,7 @@ public class ViewController {
     @GetMapping("/main")
     public String main(Principal principal,Model model){
 
+
         log.info("ViewController In {}",this.getClass());
         if(principal!=null){
             //현재 세션 존재(로그인 유저 있음)

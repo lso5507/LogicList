@@ -1,0 +1,60 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+
+    <title>Html Generated</title>
+    <meta name="description" content="Figma htmlGenerator">
+    <meta name="author" content="htmlGenerator">
+    <link href="https://fonts.googleapis.com/css?family=ABeeZee&display=swap" rel="stylesheet">
+
+    <link th:href="@{/css/login.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+
+    <style>
+              /*
+                Figma Background for illustrative/preview purposes only.
+                You can remove this style tag with no consequence
+              */
+              body {background: #E5E5E5; }
+
+
+    </style>
+
+</head>
+
+<body>
+<div>
+    <div class=back_color>
+        <div class=main>
+
+            <div class="logo">
+                <span th:onclick="|location.href='@{/view/main}'|" class="logo_text">LogicList</span>
+            </div>
+            <div class=e14_77><span class="e14_78">개발 팁 및 TodoList</span><span class="e14_79">Find your Logic</span>
+            </div>
+            <div class="e14_80"></div>
+            <div class=e14_89>
+                <form th:action="@{/view/login}" method="POST">
+                    <div class=e14_93>
+                        <button class="e14_94" type="submit">Login</button>
+                    </div>
+                    <div class=e14_97>
+                        <input class="e14_91" type="password" id="password" name="password" placeholder="패스워드를 입력하세요."/>
+                    </div>
+                    <div class=e14_100>
+                        <input class="e14_101" type="text" id="username" name="username" placeholder="아이디를 입력하세요."/>
+                    </div>
+                </form>
+
+
+            </div>
+            <div class=footer>
+                <span class="e14_105">Tistory </span><span class="e14_106">Github</span><span
+                    class="e14_107">Instagram</span><span class="e14_108">LSW</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

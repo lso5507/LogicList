@@ -1,0 +1,132 @@
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+
+    <title>Html Generated</title>
+    <meta name="description" content="Figma htmlGenerator">
+    <meta name="author" content="htmlGenerator">
+    <link href="https://fonts.googleapis.com/css?family=ABeeZee&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link th:href="@{/css/board/edit.css}" rel="stylesheet">
+    <link th:href="@{/css/common.css}" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/image.js}"></script>
+
+
+    <style>
+              /*
+                Figma Background for illustrative/preview purposes only.
+                You can remove this style tag with no consequence
+              */
+              body {background: #E5E5E5; }
+
+    </style>
+
+</head>
+
+<body>
+<div>
+    <div class="back_color">
+        <div class="main">
+            <div class="logo">
+                <span th:onclick="|location.href='@{/view/main}'|"   class="logo_text">LogicList</span>
+            </div>
+            <input type="hidden"  id="bid" th:value="${board.id}">
+            <textarea cols="80"  placeholder="제목을 입력하세요." class="title" id="title" th:text="${board.title}"></textarea>
+            <div class="content_div">
+                <input  type="hidden"id="old_content" th:value="${board.content}">
+                <div class="content" id="content" th:text="${board.content}"></div>
+                <div class="btn_con">
+                    <button onclick="upload_confirm()" class="content_btn">둥록</button>
+                    <button onclick="cancel()" class="content_btn">취소</button>
+                </div>
+            </div>
+            <div class="footer">
+                <span class="e31_34">Tistory </span><span class="e31_35">Github</span>
+                <span class="e31_36">Instagram</span><span class="e31_37">LSW</span>
+            </div>
+    </div>
+
+    </div>
+</div>
+        <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+        <script th:inline="javascript">
+        let imageArr =[];
+
+        /*<![CDATA[*/
+         const content = /*[[${board.content}]]*/;
+         imageArr=contentToArray(content)
+         console.log("initImageArr::"+imageArr);
+        const editor = new toastui.Editor({
+        el: document.querySelector('.content'),
+        height: '65%',
+        initialValue: content,
+        initialEditType: 'wysiwyg'
+      });
+      /*]]>*/
+    </script>
+    <script>
+      // AWS S3 이미지 리턴 변수
+        //Image Upload
+        editor.addHook('addImageBlobHook', (blob, callback) => {
+            const formData = new FormData();
+                formData.append("multipartFiles", blob);
+                formData.append("data", blob);
+                fetch(location.origin.toString()+"/image-upload", {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    body: formData // body 부분에 폼데이터 변수를 할당
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    imageArr.push(data.result);
+                    callback(data.result);
+                });
+            return false;
+            })
+
+        // 게시글 등록 취소
+        function cancel(){
+            if(confirm("작성을 취소하겠습니까?")){
+                location.href="/view/main";
+            }
+        }
+
+        function upload_confirm(){
+            if(confirm("등록 하겠습니까?")){
+                upload()
+            }
+        }
+        function upload(){
+            let formData = new FormData();
+            formData.append('content',editor.getMarkdown());
+            formData.append('title',document.getElementById('title').value);
+            <!-- 수정된 이미지 배열            -->
+             console.log("uploadImageArr::"+imageArr);
+
+            let deleteImageArr=imageFilter(editor.getMarkdown(),imageArr);
+            if(!imageDelete(deleteImageArr)){
+                console.log("ImageDeleteFailed");
+                return ;
+            }
+            console.log(editor.getMarkdown());
+            fetch(location.href.toString(), {
+                method: 'POST',
+                cache: 'no-cache',
+                body: formData // body 부분에 폼데이터 변수를 할당
+            })
+            .then((response) => response.json())
+            .then((data) => {
+               if(data.result=="success"){
+                alert("성공")
+                location.href="/view/main/";
+               }
+               else if(data.result=="failed"){
+                alert("실패")
+               }
+            });
+
+        }
+</script>
+
+</body>
+</html>
