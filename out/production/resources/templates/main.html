@@ -6,9 +6,10 @@
     <meta name="description" content="Figma htmlGenerator">
     <meta name="author" content="htmlGenerator">
     <link href="https://fonts.googleapis.com/css?family=ABeeZee&display=swap" rel="stylesheet">
-    <script type="text/javascript"  defer th:src="@{/js/todoList.js}"></script>
 
     <link th:href="@{/css/main.css}" rel="stylesheet">
+    <link th:href="@{/css/design/button.css}" rel="stylesheet">
+
     <link th:href="@{/css/common.css}" rel="stylesheet">
 
     <style>
@@ -37,7 +38,7 @@
                         <button th:onclick="|location.href='@{/view/logout}'|"  class="button">Logout</button>
                     </div>
                     <div th:onclick="|location.href='@{/view/login}'|"     class="logo_btn"th:unless="${user}">
-                        <button class="button">Sign In</button>
+                        <button class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted" data-text="Sign In">Sign In</button>
                     </div>
                 </div>
             </div>
@@ -64,16 +65,13 @@
 
                 </div>
                 <div class=e12_33>
+
                     <div class="main_content_right">
                         <div class=e12_46>
-                            <input class="e0_52"placeholder="Input TodoList...">
-                            <button class="button">Submit</button>
+                            <input class="e0_52"id="todoList__input__text" placeholder="Input TodoList...">
+                            <button class="button" id="todolist__input__button">Submit</button>
                         </div>
-                        <div class=e0_43>
-                            <div class="e0_44" th:each="board : ${boards}">
-                                <span class="content_item" th:onclick="|location.href='@{/board/update(bid=${board.id})}'|"th:text="${board.title}"></span>
-                            </div>
-                            <!--                <span class="e0_46">Calabasas, CA</span>-->
+                        <div class="e0_43" id="todoList__body__list">
                         </div>
                     </div>
 
@@ -93,4 +91,6 @@
     </div>
 </div>
 </body>
+<script type="text/javascript"  defer th:src="@{/js/todoList_real.js}"></script>
+
 </html>

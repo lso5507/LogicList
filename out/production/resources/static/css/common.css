@@ -1,6 +1,12 @@
 body{
 margin:0px;
 }
+.head_title{
+    display:flex;
+
+    flex-flow: column;
+
+}
 .button{
 background-color: rgba(104.99994814395905, 52.99999684095383, 253.0000001192093, 1);
     border-top-left-radius: 2px;
@@ -61,6 +67,7 @@ background-color: rgba(104.99994814395905, 52.99999684095383, 253.0000001192093,
 }
 .logo_right{
 display:flex;
+width:250px;
 }
 .logo_user {
     margin-right:15px;
