@@ -42,7 +42,7 @@ public class SpringSecurityConfig  {
                 /**
                  * image-upload,image - AWS 테스트용
                  */
-                    .antMatchers("/view/todo","/image-**","/image","/view/main","/css/**","/js/**","/plugin/**","/fonts/**")// /view/main 인증 없이 접근가능
+                    .antMatchers("/view/todo_complete","/view/todo","/image-**","/image","/view/main","/css/**","/js/**","/plugin/**","/fonts/**")// /view/main 인증 없이 접근가능
                     .permitAll()
                     .anyRequest().authenticated() // 그 외 요청은 권한 필요
                 .and()

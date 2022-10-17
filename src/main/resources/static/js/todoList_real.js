@@ -14,19 +14,10 @@
         todoContentDiv_text.className = "todoList__body__list__item__text";
         const todoContentDiv_button = document.createElement("div");
         todoContentDiv_button.className = "todoList__body__list__item__button";
-        //todoContentDiv     내 button 생성
 
+        const todoContentDivButton_com = createAddBtn(input.value);
+        const todoContentDivButton_rem = createRemoveBtn();
 
-
-
-        const todoContentDivButton_com = document.createElement("button");
-        todoContentDivButton_com.className = "todoList__body__list__item__button__complete";
-        todoContentDivButton_com.addEventListener("click", completeTodoList);
-        todoContentDivButton_com.innerText="완료";
-        const todoContentDivButton_rem = document.createElement("button");
-        todoContentDivButton_rem.className = "todoList__body__list__item__button__remove";
-        todoContentDivButton_rem.addEventListener("click", removeTodoList);
-        todoContentDivButton_rem.innerText="삭제";
         todoContentDiv_text.appendChild(document.createTextNode(input.value));
         ele.appendChild(todoContentDiv_text);
         todoContentDiv_button.appendChild(todoContentDivButton_com);
@@ -35,6 +26,31 @@
         input.value="";
 
         return ele
+}
+    function createRemoveBtn(){
+        const todoContentDivButton_rem = document.createElement("button");
+        todoContentDivButton_rem.className = "todoList__body__list__item__button__remove";
+        todoContentDivButton_rem.addEventListener("click", removeTodoList);
+        todoContentDivButton_rem.innerText="삭제";
+        return todoContentDivButton_rem;
+    }
+    function createAddBtn(value){
+        //todoContentDiv     내 button 생성
+        const todoContentDivButton_com = document.createElement("button");
+        todoContentDivButton_com.className = "todoList__body__list__item__button__complete";
+        todoContentDivButton_com.addEventListener("click", completeTodoList);
+        todoContentDivButton_com.innerText="완료";
+        todoContentDivButton_com.setAttribute("content", value);
+        return todoContentDivButton_com;
+    }
+    function completeEvent(ele){
+        let content=ele.getAttribute("content");
+        let result=completePost(content);
+        ele.addEventListener("click", completeTodoList);
+
+    }
+    function removeEvent(ele){
+            ele.addEventListener("click", removeTodoList);
 }
 //fetch post
     function postTodoList(ele){
@@ -52,6 +68,20 @@
             .then(data => console.log(data))
             .catch(err => console.log(err));
     }
+      function completePost(ele){
+
+            fetch('/view/todo_complete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "content": ele
+                })
+            })
+                .then(data => console.log(data))
+                .catch(err => console.log(err));
+        }
 
     function addTodoList(){
         var todoList = document.getElementById("todoList__body__list");
@@ -72,7 +102,7 @@
     }
     //TodoList Remove
     function removeTodoList(evt){
-       console.log(evt.currentTarget.parentNode.parentNode)
+       console.log(evt.currentTarget)
        evt.currentTarget.parentNode.parentNode.remove();
 
     }

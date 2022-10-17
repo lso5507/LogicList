@@ -16,6 +16,7 @@ import swlee.logiclist.service.UserService;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -33,8 +34,6 @@ public class ViewController {
     private TodoService todoService;
     @GetMapping("/main")
     public String main(Principal principal,Model model){
-
-
         log.info("ViewController In {}",this.getClass());
         if(principal!=null){
             //현재 세션 존재(로그인 유저 있음)
@@ -43,6 +42,9 @@ public class ViewController {
         }
         List<Board> byOrder = boardService.findByOrder();
         model.addAttribute("boards",byOrder);
+
+        ArrayList<Todo> memoryTodoList = todoService.getMemoryTodoList();
+        model.addAttribute("todolist",memoryTodoList);
 
         return "main";
     }
@@ -56,13 +58,32 @@ public class ViewController {
         log.info("Todo Test");
         return "todo_test";
     }
+    @ResponseBody
     @PostMapping("/todo")
     public String todo_post(@RequestBody @NotNull Todo todo){
         log.info("Todo_POst Test{}",todo);
-        todoService.save(todo);
-        return "todo_test";
+        try {
+            todoService.memorySave(todo);
+        }
+        catch (Exception e){
+            log.error("Todo Post Error",e);
+            return "failed";
+        }
+        return "success";
     }
-
+    @ResponseBody
+    @PostMapping("/todo_complete")
+    public String todo_complete_todo(@RequestBody @NotNull Todo todo){
+        log.info("todo_complete Test{}",todo);
+        try {
+            todoService.upload(todo);
+        }
+        catch (Exception e){
+            log.error("Todo_complete Post Error",e);
+            return "failed";
+        }
+        return "success";
+    }
     /*
     @PostMapping("/login")
     public String login_post(User user , Model model){

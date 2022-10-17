@@ -19,45 +19,57 @@
               */
               body {background: #E5E5E5; }
 
+
     </style>
 
 </head>
 
 <body>
 
-<div >
+<div>
     <div class="back_color">
         <div class=main>
-            <div class="logo" >
-                <span th:onclick="|location.href='@{/view/main}'|"   class="logo_text">LogicList</span>
+            <div class="logo">
+                <span th:onclick="|location.href='@{/view/main}'|" class="logo_text">LogicList</span>
                 <div class=logo_right>
-                    <div class="logo_user"th:if="${user}">
+                    <div class="logo_user" th:if="${user}">
                         <span class="logo_user_text">[[${user}]] 님 환영합니다.</span>
                     </div>
-                    <div class="logo_btn"th:if="${user}">
-                        <button th:onclick="|location.href='@{/view/logout}'|"  class="button">Logout</button>
+                    <div class="logo_btn" th:if="${user}">
+                        <button th:onclick="|location.href='@{/view/logout}'|"
+                                class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted"
+                                data-text="Logout">Logout
+                        </button>
                     </div>
-                    <div th:onclick="|location.href='@{/view/login}'|"     class="logo_btn"th:unless="${user}">
-                        <button class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted" data-text="Sign In">Sign In</button>
+                    <div th:onclick="|location.href='@{/view/login}'|" class="logo_btn" th:unless="${user}">
+                        <button class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted"
+                                data-text="Sign In">Sign In
+                        </button>
                     </div>
                 </div>
             </div>
             <div class="head_title">
                 <div class="e0_59">Find your Logic</div>
                 <div class="e0_58">개발 팁 및 TodoList</div>
-                <button class="head_board" th:if="${user}" th:onclick="|location.href='@{/board/edit}'|" >POST</button>
+                <button class="head_board button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted"
+                        th:if="${user}" data-text="POST" th:onclick="|location.href='@{/board/edit}'|">POST
+                </button>
             </div>
 
             <div class="main_content">
                 <div class=e12_32>
                     <div class="main_content_left">
-                        <form  th:action="@{/board/list}" class=e0_50>
+                        <form th:action="@{/board/list}" class=e0_50>
                             <input class="e0_52" placeholder="Search For Tips" name="keyword" id="keyword">
-                            <button class="e0_55" type="submit">Search</button>
+                            <button class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted"
+                                    data-text="Search" type="submit">Search
+                            </button>
                         </form>
                         <div class=e0_43>
                             <div class="e0_44" th:each="board : ${boards}">
-                                <span class="content_item" th:onclick="|location.href='@{/board/update(bid=${board.id})}'|"th:text="${board.title}"></span>
+                                <span class="content_item"
+                                      th:onclick="|location.href='@{/board/update(bid=${board.id})}'|"
+                                      th:text="${board.title}"></span>
                             </div>
                             <!--                <span class="e0_46">Calabasas, CA</span>-->
                         </div>
@@ -68,17 +80,24 @@
 
                     <div class="main_content_right">
                         <div class=e12_46>
-                            <input class="e0_52"id="todoList__input__text" placeholder="Input TodoList...">
-                            <button class="button" id="todolist__input__button">Submit</button>
+                            <input class="e0_52" id="todoList__input__text" placeholder="Input TodoList...">
+                            <button class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted"
+                                    data-text="Submit" id="todolist__input__button">Submit
+                            </button>
                         </div>
                         <div class="e0_43" id="todoList__body__list">
+                                <span class="todoList__body__list_content" th:each="todoEle : ${todolist}" >
+                                    <div class="todoList__body__list__item__text"  th:text="${todoEle.content}"/>
+                                    <div class="todoList__body__list__item__button">
+                                        <button class="todoList__body__list__item__button__complete"th:content="${todoEle.content}" th:onclick="completeEvent(this)">완료</button>
+                                        <button class="todoList__body__list__item__button__remove" th:onclick="removeEvent(this)">삭제</button>
+                                    </div>
+                                </span>
                         </div>
                     </div>
 
                 </div>
             </div>
-
-
 
 
         </div>
@@ -91,6 +110,6 @@
     </div>
 </div>
 </body>
-<script type="text/javascript"  defer th:src="@{/js/todoList_real.js}"></script>
+<script type="text/javascript" defer th:src="@{/js/todoList_real.js}"></script>
 
 </html>

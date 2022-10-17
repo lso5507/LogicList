@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link th:href="@{/css/board/edit.css}" rel="stylesheet">
     <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/design/button.css}" rel="stylesheet">
+
     <script type="text/javascript" th:src="@{/js/image.js}"></script>
     <script type="text/javascript" th:src="@{/js/window.js}"></script>
 
@@ -38,8 +40,8 @@
                 <div class="content">
                 </div>
                 <div class="btn_con">
-                    <button onclick="upload_confirm()" class="content_btn">둥록</button>
-                    <button onclick="cancel()" class="content_btn">취소</button>
+                    <button style="height:50px" onclick="upload_confirm()" data-text="Upload" class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted">둥록</button>
+                    <button  style="height:50px"onclick="cancel()" data-text="Cancel" class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted">취소</button>
                 </div>
             </div>
 
