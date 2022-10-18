@@ -1,5 +1,6 @@
 package swlee.logiclist.controller;
 
+import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,16 @@ import swlee.logiclist.service.BoardService;
 import swlee.logiclist.service.TodoService;
 import swlee.logiclist.service.UserService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import static swlee.logiclist.utils.ScriptUtils.alert;
 
 @Slf4j
 @Controller
@@ -60,23 +65,39 @@ public class ViewController {
     }
     @ResponseBody
     @PostMapping("/todo")
-    public String todo_post(@RequestBody @NotNull Todo todo){
+    public String todo_post(HttpServletResponse res, @RequestBody @NotNull Todo todo) throws IOException {
         log.info("Todo_POst Test{}",todo);
+        JsonObject obj =new JsonObject();
         try {
-            todoService.memorySave(todo);
+            String result = todoService.memorySave(todo);
+            if(!result.equals("success")){
+                log.error("result::{} is Already Exist",todo.getContent());
+                obj.addProperty("result","result:"+todo.getContent()+" is Already Exist");
+                return obj.toString();
+                }
         }
         catch (Exception e){
             log.error("Todo Post Error",e);
-            return "failed";
+            obj.addProperty("result","failed");
+            return obj.toString();
         }
-        return "success";
+        obj.addProperty("result","success");
+        return obj.toString();
     }
     @ResponseBody
-    @PostMapping("/todo_complete")
-    public String todo_complete_todo(@RequestBody @NotNull Todo todo){
-        log.info("todo_complete Test{}",todo);
+    @PostMapping("/todo_data")
+    public String todo_complete_todo(@RequestBody @NotNull Todo todo,@RequestParam("param") String param){
+        log.info("param:::{}",param);
         try {
-            todoService.upload(todo);
+            if(param.equals("complete")){
+                log.info("complete Todo");
+                todoService.upload(todo);
+                todoService.remove(todo);
+            }
+            else if(param.equals("remove")){
+                log.info("Delete Todo");
+                todoService.remove(todo);
+            }
         }
         catch (Exception e){
             log.error("Todo_complete Post Error",e);

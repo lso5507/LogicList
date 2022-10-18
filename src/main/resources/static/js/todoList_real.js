@@ -1,3 +1,4 @@
+    // 입력 버튼 클릭 시
     document.getElementById("todolist__input__button").addEventListener("click", addTodoList);
     function createCustomElement(ele){
         const input = document.getElementById("todoList__input__text");
@@ -6,31 +7,35 @@
             alert("할 일을 입력해주세요.");
             return null;
         }
+        //await으로 받기
         if(postTodoList(input)){
             //데이터 전송 성공
+            const todoContentDiv_text = document.createElement("div");
+            todoContentDiv_text.className = "todoList__body__list__item__text";
+            const todoContentDiv_button = document.createElement("div");
+            todoContentDiv_button.className = "todoList__body__list__item__button";
 
+            const todoContentDivButton_com = createAddBtn(input.value);
+            const todoContentDivButton_rem = createRemoveBtn(input.value);
+
+            todoContentDiv_text.appendChild(document.createTextNode(input.value));
+            ele.appendChild(todoContentDiv_text);
+            todoContentDiv_button.appendChild(todoContentDivButton_com);
+            todoContentDiv_button.appendChild(todoContentDivButton_rem);
+            ele.appendChild(todoContentDiv_button);
+            input.value="";
         }
-        const todoContentDiv_text = document.createElement("div");
-        todoContentDiv_text.className = "todoList__body__list__item__text";
-        const todoContentDiv_button = document.createElement("div");
-        todoContentDiv_button.className = "todoList__body__list__item__button";
 
-        const todoContentDivButton_com = createAddBtn(input.value);
-        const todoContentDivButton_rem = createRemoveBtn();
-
-        todoContentDiv_text.appendChild(document.createTextNode(input.value));
-        ele.appendChild(todoContentDiv_text);
-        todoContentDiv_button.appendChild(todoContentDivButton_com);
-        todoContentDiv_button.appendChild(todoContentDivButton_rem);
-        ele.appendChild(todoContentDiv_button);
-        input.value="";
 
         return ele
 }
-    function createRemoveBtn(){
+    function createRemoveBtn(value){
         const todoContentDivButton_rem = document.createElement("button");
         todoContentDivButton_rem.className = "todoList__body__list__item__button__remove";
-        todoContentDivButton_rem.addEventListener("click", removeTodoList);
+        todoContentDivButton_rem.addEventListener("click", (evt)=>{
+            removePost(value);
+            removeTodoList(evt);
+        });
         todoContentDivButton_rem.innerText="삭제";
         return todoContentDivButton_rem;
     }
@@ -38,7 +43,10 @@
         //todoContentDiv     내 button 생성
         const todoContentDivButton_com = document.createElement("button");
         todoContentDivButton_com.className = "todoList__body__list__item__button__complete";
-        todoContentDivButton_com.addEventListener("click", completeTodoList);
+        todoContentDivButton_com.addEventListener("click", (evt)=>{
+            completePost(value);
+            completeTodoList(evt);
+        });
         todoContentDivButton_com.innerText="완료";
         todoContentDivButton_com.setAttribute("content", value);
         return todoContentDivButton_com;
@@ -50,27 +58,30 @@
 
     }
     function removeEvent(ele){
-            ele.addEventListener("click", removeTodoList);
+        let content=ele.getAttribute("content");
+        let result=removePost(content);
+        ele.addEventListener("click", removeTodoList);
 }
 //fetch post
-    function postTodoList(ele){
-
-        fetch('/view/todo', {
+    async function postTodoList(ele){
+        let data = await fetch(location.origin.toString()+"/view/todo", {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+             headers: {'Content-Type': 'application/json'},
+            cache: 'no-cache',
             body: JSON.stringify({
-                "content": ele.value
-            })
+              "content": ele.value})
         })
-            .then(response => response.json())
-            .then(data => console.log(data))
-            .catch(err => console.log(err));
+        data=data.json();
+        console.log("data::",data)
+        if(data.result!="success"){
+          alert(data.result);
+          return false;
+        }
+        return true;
     }
-      function completePost(ele){
+    function completePost(ele){
 
-            fetch('/view/todo_complete', {
+            fetch('/view/todo_data?param=complete', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -81,6 +92,20 @@
             })
                 .then(data => console.log(data))
                 .catch(err => console.log(err));
+    }
+    function removePost(ele){
+
+                fetch('/view/todo_data?param=remove', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "content": ele
+                    })
+                })
+                    .then(data => console.log(data))
+                    .catch(err => console.log(err));
         }
 
     function addTodoList(){
