@@ -65,7 +65,7 @@ public class ViewController {
     }
     @ResponseBody
     @PostMapping("/todo")
-    public String todo_post(HttpServletResponse res, @RequestBody @NotNull Todo todo) throws IOException {
+    public String todo_post(HttpServletResponse res, @RequestBody @NotNull Todo todo)  {
         log.info("Todo_POst Test{}",todo);
         JsonObject obj =new JsonObject();
         try {

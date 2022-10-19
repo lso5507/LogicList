@@ -1,6 +1,6 @@
     // 입력 버튼 클릭 시
     document.getElementById("todolist__input__button").addEventListener("click", addTodoList);
-    function createCustomElement(ele){
+    async function createCustomElement(ele){
         const input = document.getElementById("todoList__input__text");
 
         if(input==null || input.value==""){
@@ -8,7 +8,8 @@
             return null;
         }
         //await으로 받기
-        if(postTodoList(input)){
+        const result=await postTodoList(input);
+        if(result){
             //데이터 전송 성공
             const todoContentDiv_text = document.createElement("div");
             todoContentDiv_text.className = "todoList__body__list__item__text";
@@ -24,10 +25,9 @@
             todoContentDiv_button.appendChild(todoContentDivButton_rem);
             ele.appendChild(todoContentDiv_button);
             input.value="";
+            return ele;
         }
-
-
-        return ele
+        return null;
 }
     function createRemoveBtn(value){
         const todoContentDivButton_rem = document.createElement("button");
@@ -71,8 +71,8 @@
             body: JSON.stringify({
               "content": ele.value})
         })
-        data=data.json();
-        console.log("data::",data)
+        data=await data.json();
+
         if(data.result!="success"){
           alert(data.result);
           return false;
@@ -108,14 +108,16 @@
                     .catch(err => console.log(err));
         }
 
-    function addTodoList(){
+    async function addTodoList(){
         var todoList = document.getElementById("todoList__body__list");
 
         var todoContent = document.createElement("span");
     //    실제 텍스트를 넣어준다.
         todoContent.className = "todoList__body__list_content";
-        const result=createCustomElement(todoContent);
+        const result=await createCustomElement(todoContent);
+        console.log("result::",result);
         if(result!=null){
+
             todoList.appendChild(result);
         }
 
@@ -127,13 +129,11 @@
     }
     //TodoList Remove
     function removeTodoList(evt){
-       console.log(evt.currentTarget)
        evt.currentTarget.parentNode.parentNode.remove();
 
     }
     //TodoList Complete
     function completeTodoList(evt){
-       console.log(evt.currentTarget.parentNode.parentNode)
        evt.currentTarget.parentNode.parentNode.remove();
 
     }
