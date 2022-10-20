@@ -90,7 +90,7 @@
                                     <div class="todoList__body__list__item__text"  th:text="${todoEle.content}"/>
                                     <div class="todoList__body__list__item__button">
                                         <button class="todoList__body__list__item__button__complete"th:content="${todoEle.content}" th:onclick="completeEvent(this)">완료</button>
-                                        <button class="todoList__body__list__item__button__remove" th:onclick="removeEvent(this)">삭제</button>
+                                        <button class="todoList__body__list__item__button__remove" th:content="${todoEle.content}" th:onclick="removeEvent(this)">삭제</button>
                                     </div>
                                 </span>
                         </div>

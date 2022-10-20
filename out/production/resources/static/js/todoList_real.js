@@ -37,6 +37,8 @@
             removeTodoList(evt);
         });
         todoContentDivButton_rem.innerText="삭제";
+        todoContentDivButton_rem.setAttribute("content", value);
+
         return todoContentDivButton_rem;
     }
     function createAddBtn(value){
@@ -69,7 +71,8 @@
              headers: {'Content-Type': 'application/json'},
             cache: 'no-cache',
             body: JSON.stringify({
-              "content": ele.value})
+              "content": ele.value,
+              })
         })
         data=await data.json();
 
@@ -80,6 +83,7 @@
         return true;
     }
     function completePost(ele){
+        console.log("Comple__ele::",ele);
 
             fetch('/view/todo_data?param=complete', {
                 method: 'POST',
@@ -87,13 +91,14 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "content": ele
+                    "content": ele,
                 })
             })
                 .then(data => console.log(data))
                 .catch(err => console.log(err));
     }
     function removePost(ele){
+        console.log("removePost_ELE::",ele);
 
                 fetch('/view/todo_data?param=remove', {
                     method: 'POST',
@@ -117,7 +122,6 @@
         const result=await createCustomElement(todoContent);
         console.log("result::",result);
         if(result!=null){
-            alert("addTodoListAppendIn!!")
 
             todoList.appendChild(result);
         }

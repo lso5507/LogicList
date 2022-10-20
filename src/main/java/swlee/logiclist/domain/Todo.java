@@ -9,6 +9,8 @@ public class Todo {
     private String content;
     private Date date;
 
-
+    public Todo() {
+        this.date=new Date();
+    }
 }
 

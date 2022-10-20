@@ -19,6 +19,10 @@ public class TodoService {
     public void upload(Todo todo) {
         todoRepository.save(todo);
     }
+    //ArrayList Todo upload
+    public void upload(ArrayList<Todo> todoArrayList) {
+        todoRepository.saveAll(todoArrayList);
+    }
     public String memorySave(Todo todo) {
         if(getTodoByContent(todo.getContent())!=null){
             return "Todo Already Exist";
@@ -27,12 +31,28 @@ public class TodoService {
         return "success";
     }
     public ArrayList<Todo> getMemoryTodoList() {
+        //memoryTodoList 같은 일자 체크
         //memoryTodolist 5개 전달
-        if(memoryTodoList.size()>5) {
-            return new ArrayList<>(memoryTodoList.subList(0, 5));
+        ArrayList<Todo> todos = memoryFilter();
+        return todos;
+    }
+
+    private ArrayList<Todo> memoryFilter() {
+        //new ArrayList
+        ArrayList<Todo> removeTodoList = new ArrayList<>();
+        for (Todo todo : memoryTodoList) {
+            //todo.getData()가 24시간이 지났을경우
+            if (todo.getDate().getTime() + 86400000 < System.currentTimeMillis()) { //86400000=24시간
+                removeTodoList.add(todo);
+            }
         }
+        //지우기 전 revmoveTodoList를 DB저장
+        upload(removeTodoList);
+        //removeTodoList를 memoryTodoList에서 제거
+        memoryTodoList.removeAll(removeTodoList);
         return memoryTodoList;
     }
+
     public Todo getTodoByContent(String content) {
         for (Todo todo : memoryTodoList) {
             if (todo.getContent().equals(content)) {

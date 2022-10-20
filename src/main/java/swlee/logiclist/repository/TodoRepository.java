@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import swlee.logiclist.domain.Todo;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 
 @Repository
 @Slf4j
@@ -30,11 +31,22 @@ public class TodoRepository {
             log.error("TodoRepository.save() error",e);
         }
         //JDBC Template Save Query
-
-
-
-
-
-
     }
+    //SaveAll batchupdate
+    public void saveAll(ArrayList<Todo> todoArrayList){
+        try{
+            final String sql = "INSERT INTO todo (content) VALUES (?)";
+            jdbcTemplate.batchUpdate(sql, todoArrayList, todoArrayList.size(), (ps, todo) -> {
+                ps.setString(1, todo.getContent());
+            });
+            log.info("Todo Save Success");
+        }catch (Exception e){
+            log.error("TodoRepository.save() error",e);
+        }
+        //JDBC Template Save Query
+    }
+
+
+
+
 }

@@ -69,6 +69,7 @@ public class ViewController {
         log.info("Todo_POst Test{}",todo);
         JsonObject obj =new JsonObject();
         try {
+            log.info("todo_date::{}",todo.getDate());
             String result = todoService.memorySave(todo);
             if(!result.equals("success")){
                 log.error("result::{} is Already Exist",todo.getContent());
