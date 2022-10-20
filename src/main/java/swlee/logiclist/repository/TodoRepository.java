@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import swlee.logiclist.domain.Todo;
 
 import javax.sql.DataSource;
+import java.sql.Date;
 import java.util.ArrayList;
 
 @Repository
@@ -24,8 +25,8 @@ public class TodoRepository {
 
     public void save(Todo todo){
         try{
-            final String sql = "INSERT INTO todo (content) VALUES (?)";
-            jdbcTemplate.update(sql, todo.getContent());
+            final String sql = "INSERT INTO todo (content,date) VALUES (?,?)";
+            jdbcTemplate.update(sql, todo.getContent(),todo.getDate());
             log.info("Todo Save Success");
         }catch (Exception e){
             log.error("TodoRepository.save() error",e);
@@ -35,9 +36,12 @@ public class TodoRepository {
     //SaveAll batchupdate
     public void saveAll(ArrayList<Todo> todoArrayList){
         try{
-            final String sql = "INSERT INTO todo (content) VALUES (?)";
+            final String sql = "INSERT INTO todo (content,date) VALUES (?,?)";
             jdbcTemplate.batchUpdate(sql, todoArrayList, todoArrayList.size(), (ps, todo) -> {
                 ps.setString(1, todo.getContent());
+                
+                // sql Date로 변환
+                ps.setDate(2, new Date(todo.getDate().getTime()));
             });
             log.info("Todo Save Success");
         }catch (Exception e){
