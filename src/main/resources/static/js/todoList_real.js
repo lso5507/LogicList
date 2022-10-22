@@ -76,8 +76,8 @@
         })
         data=await data.json();
 
-        if(data.result!="success"){
-          alert(data.result);
+        if(data.result!="1"){
+          alert(data.errorMsg);
           return false;
         }
         return true;
@@ -125,12 +125,6 @@
 
             todoList.appendChild(result);
         }
-
-        //todoContent 내 div 생성
-    //    특정 부모 노드의 자식 노드 리스트 중 마지막 자식으로 붙입니다.
-//        todoContent.appendChild(document.createTextNode(input.value));
-
-
     }
     //TodoList Remove
     function removeTodoList(evt){

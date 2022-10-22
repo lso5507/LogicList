@@ -28,13 +28,16 @@ public class BoardController {
         return "board/edit";
     }
     @GetMapping("/list")
-    public String list(Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String list(@RequestParam(value="pages",defaultValue ="1")String pages, Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.info("pages::{}",pages);
+
         String keyword = request.getParameter("keyword");
+        log.info("keyword::{}",keyword);
         // 비정상 접근 핸들링
         if(keyword.isBlank()||keyword.isEmpty()||keyword==null){
             ScriptUtils.alertAndBackPage(response,"비정상적인 접근입니다.");
         }
-        List<Board> boards = boardService.findByName(keyword);
+        List<Board> boards = boardService.findByName(keyword,pages);
         if(boards.isEmpty()){
             ScriptUtils.alertAndBackPage(response,"검색결과가 없습니다.");
 
@@ -60,6 +63,25 @@ public class BoardController {
         Board save = boardService.update(board);
         //JSON Response
         String jsonStr = createJson(save);
+        return jsonStr;
+    }
+    @DeleteMapping("/update")
+    @ResponseBody
+    public String update_delete(HttpServletRequest req, Principal principal){
+        log.info("delete_Content::{}",req.getParameter("bid"));
+        boolean result=boardService.delete(Integer.parseInt(req.getParameter("bid")));
+        Gson gson = new Gson();
+        // Json key, value 추가
+        JsonObject jsonObject = new JsonObject();
+        if(result){
+            jsonObject.addProperty("result", "success");
+
+        }else{
+            jsonObject.addProperty("result", "failed");
+
+        }
+        // JsonObject를 Json 문자열로 변환
+        String jsonStr = gson.toJson(jsonObject);
         return jsonStr;
     }
     @PostMapping("/edit")

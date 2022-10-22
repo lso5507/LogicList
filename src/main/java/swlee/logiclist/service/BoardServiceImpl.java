@@ -39,9 +39,17 @@ public class BoardServiceImpl implements BoardService{
         return  boardRepository.findById(id);
     }
 
+    /**
+     *
+     * @param keyword(검색어)
+     * @param pages(페이지)
+     * @return
+     */
     @Override
-    public List<Board> findByName(String keyword) {
-        return  boardRepository.findByName(keyword);
+    public List<Board> findByName(String keyword,String pages) {
+
+        return  boardRepository.findByName(keyword,pages);
+
     }
 
     @Override

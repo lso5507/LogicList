@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import swlee.logiclist.domain.Todo;
 import swlee.logiclist.repository.TodoRepository;
+import swlee.logiclist.utils.TodoResult;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+
+import static swlee.logiclist.utils.TodoResult.*;
 
 @Service
 @Slf4j
@@ -23,12 +25,28 @@ public class TodoService {
     public void upload(ArrayList<Todo> todoArrayList) {
         todoRepository.saveAll(todoArrayList);
     }
-    public String memorySave(Todo todo) {
-        if(getTodoByContent(todo.getContent())!=null){
-            return "Todo Already Exist";
+
+    /**
+     * @param todo
+     * @return - 1 : Todo Upload Success
+     * - 0 : Todo Upload Fail (Exception)
+     * - -1 : Todo Upload Fail (Todo is null)
+     * - -2 : Todo Already Exist
+     */
+    public TodoResult memorySave(Todo todo) {
+        if (todo == null) {
+            return FAIL_NULL;
         }
-        memoryTodoList.add(todo);
-        return "success";
+        if(getTodoByContent(todo.getContent())!=null){
+            return FAIL_EXIST;
+        }
+        try {
+            memoryTodoList.add(todo);
+        } catch (Exception e) {
+            log.error("TodoService.memorySave() error", e);
+            return FAIL;
+        }
+        return SUCCESS;
     }
     public ArrayList<Todo> getMemoryTodoList() {
         //memoryTodoList 같은 일자 체크
@@ -63,6 +81,11 @@ public class TodoService {
     }
     public void remove(Todo todo) {
         //todo.getContent()와 같은 내용을 가진 Todo를 삭제
-        memoryTodoList.removeIf(t -> t.getContent().equals(todo.getContent()));
+        try {
+            memoryTodoList.removeIf(t -> t.getContent().equals(todo.getContent()));
+            //같은 내용을 가진 Todo가 없을때
+        }catch (Exception e){
+            log.error("TodoService.remove() error", e);
+        }
     }
 }

@@ -14,6 +14,7 @@ import swlee.logiclist.domain.User;
 import swlee.logiclist.service.BoardService;
 import swlee.logiclist.service.TodoService;
 import swlee.logiclist.service.UserService;
+import swlee.logiclist.utils.TodoResult;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -70,20 +71,18 @@ public class ViewController {
         JsonObject obj =new JsonObject();
         try {
             log.info("todo_date::{}",todo.getDate());
-            String result = todoService.memorySave(todo);
-            if(!result.equals("success")){
-                log.error("result::{} is Already Exist",todo.getContent());
-                obj.addProperty("result","result:"+todo.getContent()+" is Already Exist");
-                return obj.toString();
-                }
+            TodoResult result = todoService.memorySave(todo);
+            obj.addProperty("result", result.getCode());
+            obj.addProperty("errorMsg",result.getMessage());
+            return obj.toString();
         }
         catch (Exception e){
             log.error("Todo Post Error",e);
-            obj.addProperty("result","failed");
+            obj.addProperty("result", 0);
+            obj.addProperty("errorMsg",e.getMessage());
             return obj.toString();
         }
-        obj.addProperty("result","success");
-        return obj.toString();
+
     }
     @ResponseBody
     @PostMapping("/todo_data")

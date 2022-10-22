@@ -59,15 +59,21 @@ public class BoardRepositoryImpl implements BoardRepository{
         };
 
     }
-
-
-
     @Override
-    public List<Board> findByName(String keyword) {
-        final String sql = "SELECT * FROM board WHERE content LIKE ? OR title LIKE ?";
-        keyword='%'+keyword+'%';
-        List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper(),keyword,keyword);
+    public List<Board> findByName(String keyword,String pages) {
+        //페이징 구현
+        int page = Integer.parseInt(pages);
+        int start = (page-1)*5;
+        int end = page*5;
+        final String sql = "SELECT * FROM board WHERE title LIKE ? LIMIT ?,?";
+        List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper(), "%"+keyword+"%",start,end);
+        log.info("findBoard : {}",findBoard);
         return findBoard;
+//
+//        final String sql = "SELECT * FROM board WHERE content LIKE ? OR title LIKE ?";
+//        keyword='%'+keyword+'%';
+//        List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper(),keyword,keyword);
+//        return findBoard;
     }
     //최신 게시글 5개 긁어오기
     @Override

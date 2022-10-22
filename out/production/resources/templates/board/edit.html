@@ -41,7 +41,7 @@
                 </div>
                 <div class="btn_con">
                     <button style="height:50px" onclick="upload_confirm()" data-text="Upload" class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted">둥록</button>
-                    <button  style="height:50px"onclick="cancel()" data-text="Cancel" class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted">취소</button>
+                    <button  style="height:50px"onclick="cancel_confirm()" data-text="Cancel" class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted">취소</button>
                 </div>
             </div>
 
@@ -60,7 +60,7 @@
         initialValue: 'myLogicList',
         initialEditType: 'wysiwyg'
       });
-
+      let deleteArr=[];
       let imageArr =[];
       // AWS S3 이미지 리턴 변수
 
@@ -78,16 +78,27 @@
                 .then((response) => response.json())
                 .then((data) => {
                     imageArr.push(data.result);
+                    deleteArr.push(data.result);
                     callback(data.result);
                 });
             return false;
             })
-        // 게시글 등록 취소
-        function cancel(){
-            if(confirm("작성을 취소하겠습니까?")){
-                location.href="/view/main";
+          // 게시글 등록 취소
+            function cancel_confirm(){
+                if(confirm("작성을 취소하겠습니까?")){
+                   cancel();
+                }
             }
-        }
+             function cancel(){
+                if(deleteArr.length>0){
+                    if(!imageDelete(deleteArr)){
+                        console.log("ImageDeleteFailed");
+                        return ;
+                    }
+                    console.log("ImageDeleteSuccess");
+                }
+                location.href="/view/main/";
+            }
 
         function upload_confirm(){
             if(document.getElementById('title').value.trim()==""){
@@ -104,10 +115,13 @@
             formData.append('title',document.getElementById('title').value);
             console.log(editor.getMarkdown());
             let deleteImageArr=imageFilter(editor.getMarkdown(),imageArr);
-            if(!imageDelete(deleteImageArr)){
-                console.log("이미지 삭제 실패");
-                return ;
+            if(imageArr.length>0){
+               if(!imageDelete(deleteImageArr)){
+                    console.log("이미지 삭제 실패");
+                    return ;
+               }
             }
+
             fetch(location.href.toString(), {
                 method: 'POST',
                 cache: 'no-cache',

@@ -39,7 +39,7 @@ public class TodoRepository {
             final String sql = "INSERT INTO todo (content,date) VALUES (?,?)";
             jdbcTemplate.batchUpdate(sql, todoArrayList, todoArrayList.size(), (ps, todo) -> {
                 ps.setString(1, todo.getContent());
-                
+
                 // sql Date로 변환
                 ps.setDate(2, new Date(todo.getDate().getTime()));
             });
