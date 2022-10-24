@@ -17,9 +17,22 @@ public class AppConfig {
             //os 가 mac을 포함
             if(os.contains("mac")){
                 password="";
-            }else{
+            }else if(os.contains("window")){
                 password="1111";
 
+            }else if(os.contains("linux")){
+                password="lsw96";
+                DriverManagerDataSource dataSource = new DriverManagerDataSource();
+                dataSource.setUsername("lsw");
+                dataSource.setPassword(password);
+                //postgresql DriverClassname
+                dataSource.setDriverClassName("org.postgresql.Driver");
+//                dataSource.setUrl("jdbc:postgresql:tcp://localhost/~/logiclist");
+                dataSource.setUrl("jdbc:postgresql://localhost:5432/logiclist");
+
+                //postgresql
+
+                return dataSource;
             }
         }
         DriverManagerDataSource dataSource = new DriverManagerDataSource();

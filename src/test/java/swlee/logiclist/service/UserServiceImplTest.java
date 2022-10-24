@@ -32,7 +32,7 @@ class UserServiceImplTest {
 //    }
     @Test
      void save() {
-        User user = new User("root","1111");
+        User user = new User("roots","1111");
         User save = userService.save(user);
         log.info("USER PASSWORD ={}",user.getPassword());
         Assertions.assertThat(save).isNotNull();

@@ -47,4 +47,4 @@ spring:
   config:
     activate:
       on-profile: "development"
-  file-dir: /home/ec2-user/files/
+  file-dir: /home/ec2-user/logiclist/files/

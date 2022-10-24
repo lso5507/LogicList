@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
     <link th:href="@{/css/board/edit.css}" rel="stylesheet">
     <link th:href="@{/css/common.css}" rel="stylesheet">
+    <link th:href="@{/css/design/button.css}" rel="stylesheet">
+
     <script type="text/javascript" th:src="@{/js/image.js}"></script>
 
 
@@ -36,21 +38,24 @@
                 <input  type="hidden"id="old_content" th:value="${board.content}">
                 <div class="content" id="content" th:text="${board.content}"></div>
                 <div class="btn_con">
-                    <button onclick="upload_confirm()" class="content_btn">둥록</button>
-                    <button onclick="cancel()" class="content_btn">취소</button>
+                    <button data-text="Upload" style="height:50px;"onclick="upload_confirm()" class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted">둥록</button>
+                    <button data-text="Cancel" style="height:50px;"onclick="cancel_confirm()" class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted">취소</button>
+                    <button data-text="Remove" style="height:50px;"onclick="remove_confirm()" class="button_style button--tamaya button--round-l button--text-thick button--border-medium button--text-upper button--size-s button--inverted">삭제</button>
+
                 </div>
             </div>
-            <div class="footer">
-                <span class="e31_34">Tistory </span><span class="e31_35">Github</span>
-                <span class="e31_36">Instagram</span><span class="e31_37">LSW</span>
-            </div>
-    </div>
 
+        </div>
+        <div class="footer">
+            <span class="e31_34">Tistory </span><span class="e31_35">Github</span>
+            <span class="e31_36">Instagram</span><span class="e31_37">LSW</span>
+        </div>
     </div>
 </div>
         <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
         <script th:inline="javascript">
         let imageArr =[];
+        let deleteArr =[];
 
         /*<![CDATA[*/
          const content = /*[[${board.content}]]*/;
@@ -79,23 +84,69 @@
                 .then((response) => response.json())
                 .then((data) => {
                     imageArr.push(data.result);
+                    deleteArr.push(data.result);
                     callback(data.result);
                 });
             return false;
             })
 
         // 게시글 등록 취소
-        function cancel(){
+        function cancel_confirm(){
             if(confirm("작성을 취소하겠습니까?")){
-                location.href="/view/main";
+               cancel();
             }
         }
-
+         function cancel(){
+            if(deleteArr.length>0){
+                if(!imageDelete(deleteArr)){
+                    console.log("ImageDeleteFailed");
+                    return ;
+                }
+                console.log("ImageDeleteSuccess");
+            }
+            location.href="/view/main/";
+        }
         function upload_confirm(){
             if(confirm("등록 하겠습니까?")){
                 upload()
             }
         }
+        function remove_confirm(){
+            if(confirm("삭제 하겠습니까?")){
+                remove()
+            }
+        }
+        function remove(){
+            if(imageArr.length>0){
+                if(!imageDelete(imageArr)){
+                    console.log("ImageDeleteFailed");
+                    return ;
+                }
+            }
+
+          let bid = document.getElementById("bid").value;
+            console.log(bid);
+            fetch(location.href.toString(),{
+                method:"DELETE",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify({
+                    bid:bid
+                })
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if(data.result){
+                    alert("삭제되었습니다.");
+                    location.href="/view/main";
+                }else{
+                    alert("삭제실패");
+                }
+            })
+        }
+
+
         function upload(){
             let formData = new FormData();
             formData.append('content',editor.getMarkdown());
@@ -104,9 +155,11 @@
              console.log("uploadImageArr::"+imageArr);
 
             let deleteImageArr=imageFilter(editor.getMarkdown(),imageArr);
-            if(!imageDelete(deleteImageArr)){
-                console.log("ImageDeleteFailed");
-                return ;
+            if(deleteImageArr.length>0){
+                if(!imageDelete(deleteImageArr)){
+                    console.log("ImageDeleteFailed");
+                    return ;
+                }
             }
             console.log(editor.getMarkdown());
             fetch(location.href.toString(), {

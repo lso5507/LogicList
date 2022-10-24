@@ -38,15 +38,15 @@ public class UserServiceImpl implements UserService {
         User findUser = userRepository.findByName(user.getUsername());
         //username Check
         if(findUser==null){
-            throw new IncorrectAccountException("계정이 올바르지 않습니다.");
+            log.error("IncorrectAccountException",new IncorrectAccountException("계정이 올바르지 않습니다."));
+            return null;
         }
         if(passwordCheck(user, findUser)){
             log.info("Correct Password ");
             return  findUser;
         }else{
-            log.info("incorrect Password");
-            throw new IncorrectAccountException("패스워드가 알맞지 않습니다.");
-
+            log.error("IncorrectAccountException",new IncorrectAccountException("계정이 올바르지 않습니다."));
+            return null;
         }
 
     }

@@ -59,6 +59,22 @@ public class ViewController {
         log.info("ViewController In Login");
         return "login";
     }
+    @GetMapping("/signup")
+    public String signup(){
+        log.info("ViewController In Signup");
+        return "signup";
+    }
+    @PostMapping("/signup")
+    public String signup(@Valid User user, HttpServletResponse response) throws IOException {
+        log.info("ViewController In Signup Post");
+        log.info("user::{}",user);
+//        if(userservice.findByName(user)!=null){
+//            alert(response,"이미 존재하는 아이디입니다.");
+//            return "redirect:/view/signup";
+//        }
+        userservice.save(user);
+        return "redirect:/view/login";
+    }
     @GetMapping("/todo")
     public String todo(){
         log.info("Todo Test");

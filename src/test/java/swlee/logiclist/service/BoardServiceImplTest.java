@@ -71,7 +71,7 @@ class BoardServiceImplTest {
     @Test
     void findByName() {
         boardService.save(board);
-        List<Board> title = boardService.findByName("제목");
+        List<Board> title = boardService.findByName("제목","1");
 //        assertThat(title.get(0).getTitle()).isEqualTo("title");
         StringBuilder sb = new StringBuilder();
         for (Board ele : title) {

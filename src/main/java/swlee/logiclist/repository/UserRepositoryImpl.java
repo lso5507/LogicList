@@ -50,7 +50,10 @@ public class UserRepositoryImpl implements UserRepository{
         User findUser=null;
         try {
             findUser = jdbcTemplate.queryForObject(sql, getRowMapper(), username);
-        }catch(DataAccessException e){
+        } catch (EmptyResultDataAccessException e){
+            log.error("User_EmptyResultDataAccessException : ",e);
+            return null;
+        } catch(DataAccessException e){
             log.error("NotFoundUser :",e);
             return null;
         }catch (NullPointerException e){
