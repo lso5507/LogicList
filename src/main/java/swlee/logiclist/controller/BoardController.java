@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import swlee.logiclist.domain.Board;
+import swlee.logiclist.domain.PageMaker;
 import swlee.logiclist.service.BoardService;
 import swlee.logiclist.utils.ScriptUtils;
 
@@ -30,6 +31,8 @@ public class BoardController {
     @GetMapping("/list")
     public String list(@RequestParam(value="pages",defaultValue ="1")String pages, Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) throws IOException {
         log.info("pages::{}",pages);
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setStartPage(Integer.parseInt(pages));
 
         String keyword = request.getParameter("keyword");
         log.info("keyword::{}",keyword);
@@ -43,6 +46,7 @@ public class BoardController {
 
         }
         model.addAttribute("boards",boards);
+        model.addAttribute("pageMakers",pageMaker);
 
         return "board/list";
     }

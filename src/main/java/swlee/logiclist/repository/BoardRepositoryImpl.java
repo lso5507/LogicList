@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import swlee.logiclist.domain.Board;
+import swlee.logiclist.domain.PageMaker;
 import swlee.logiclist.domain.User;
 
 import javax.sql.DataSource;
@@ -63,8 +64,10 @@ public class BoardRepositoryImpl implements BoardRepository{
     public List<Board> findByName(String keyword,String pages) {
         //페이징 구현
         int page = Integer.parseInt(pages);
+        PageMaker pageMaker = new PageMaker();
+        pageMaker.setTotalCount(page);
         int start = (page-1)*5;
-        int end = page*5;
+        int end = start+5;
         final String sql = "SELECT * FROM board WHERE title LIKE ? LIMIT ?,?";
         List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper(), "%"+keyword+"%",start,end);
         log.info("findBoard : {}",findBoard);

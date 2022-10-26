@@ -31,12 +31,11 @@ a:hover { text-decoration:none !important }
 
 }
 .content{
-    position: absolute;
     display: flex;
+    height:75%;
+    margin-top:30px;
+    align-items: center;
     flex-direction: column;
-    justify-content: space-around;
-    left: 150px;
-    top: 206px;
 }
 .e38_35 {
 background-color: rgba(255, 255, 255, 1);
@@ -68,10 +67,7 @@ background-color: rgba(255, 255, 255, 1);
 	background-color:rgba(217.0000022649765, 217.0000022649765, 217.0000022649765, 1);
 	width:378px;
 	height:39px;
-	position:absolute;
-    left: 50%;
-    top: 700px;
-    margin-left: -189px;
+	margin:0 auto;
 }
 .content_item{
 	color:rgba(39.00000147521496, 39.00000147521496, 39.00000147521496, 1);
