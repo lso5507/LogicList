@@ -9,6 +9,7 @@ public interface BoardService {
     public Board update(Board board);
     public Board findById(int id);
 
+    public int count(String keyword);
     public List<Board> findByName(String keyword,String pages);
     public  List<Board> findByOrder();
     public boolean delete(int id);

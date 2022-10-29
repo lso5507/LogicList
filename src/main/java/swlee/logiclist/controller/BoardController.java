@@ -2,6 +2,7 @@ package swlee.logiclist.controller;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,13 +30,17 @@ public class BoardController {
         return "board/edit";
     }
     @GetMapping("/list")
-    public String list(@RequestParam(value="pages",defaultValue ="1")String pages, Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String list(@RequestParam(value="keyword")@NonNull String keyword, @RequestParam(value="page",defaultValue ="1")String pages, Model model, Principal principal, HttpServletRequest request, HttpServletResponse response) throws IOException {
         log.info("pages::{}",pages);
+        log.info("keyword::{}",keyword);
         PageMaker pageMaker = new PageMaker();
         pageMaker.setStartPage(Integer.parseInt(pages));
-
-        String keyword = request.getParameter("keyword");
-        log.info("keyword::{}",keyword);
+        //총 게시글 갯수 가져오기
+        int total = boardService.count(keyword);
+        pageMaker.setTotalCount(total);
+        //start page, endpage 출력
+        log.info("startPage::{}",pageMaker.getStartPage());
+        log.info("endPage::{}",pageMaker.getEndPage());
         // 비정상 접근 핸들링
         if(keyword.isBlank()||keyword.isEmpty()||keyword==null){
             ScriptUtils.alertAndBackPage(response,"비정상적인 접근입니다.");
@@ -46,7 +51,7 @@ public class BoardController {
 
         }
         model.addAttribute("boards",boards);
-        model.addAttribute("pageMakers",pageMaker);
+        model.addAttribute("pageMaker",pageMaker);
 
         return "board/list";
     }

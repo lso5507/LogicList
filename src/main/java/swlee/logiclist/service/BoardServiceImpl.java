@@ -29,7 +29,6 @@ public class BoardServiceImpl implements BoardService{
         return  boardRepository.update(board);
     }
     @Override
-
     public  List<Board> findByOrder(){
         return boardRepository.findByOrder();
     }
@@ -51,7 +50,10 @@ public class BoardServiceImpl implements BoardService{
         return  boardRepository.findByName(keyword,pages);
 
     }
-
+    @Override
+    public int count(String keyword){
+        return boardRepository.count(keyword);
+    }
     @Override
     public boolean delete(int id) {
         return  boardRepository.delete(id);

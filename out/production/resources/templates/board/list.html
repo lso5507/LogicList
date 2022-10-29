@@ -49,11 +49,25 @@
                     </div>
                 </div>
                 <div class="e38_105">
-                    <div class="e0_44" th:each="pagemaker : ${pagemakers}">
-                                <li>
-                                    <a th:href="@{list(bid=${board.id})}">> </a>
-                                </li>
-                    </div>
+<!--                        <li th:each="num:${#numbers.sequence(0,10)}">-->
+<!--                            <a th:href="@{list(page=${pageMaker.startPage},keyword=$${#httpServletRequest.getParameter('keyword')}" th:text="${pageMaker.startPage}"> </a>-->
+<!--                        </li>-->
+                    <nav style="text-align: center;">
+                        <ul class="pagination" th:with="start=${pageMaker.startPage}, end=${pageMaker.endPage}-1">
+
+                            <li th:each="page: ${#numbers.sequence(start, end)}">
+                                <th:block th:if="${pageStat.first}">
+                                    <a class="active" th:href="@{list(page=${page},keyword=${#httpServletRequest.getParameter('keyword')})}" th:text="${page}"></a>
+                                </th:block>
+                                <th:block th:if="${!pageStat.first}">
+                                    <a th:href="@{list(page=${page},keyword=${#httpServletRequest.getParameter('keyword')})}" th:text="${page}"></a>
+                                </th:block>
+                            </li>
+
+
+                        </ul>
+                    </nav>
+
 
                 </div>
 

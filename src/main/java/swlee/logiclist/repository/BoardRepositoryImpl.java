@@ -62,14 +62,12 @@ public class BoardRepositoryImpl implements BoardRepository{
     }
     @Override
     public List<Board> findByName(String keyword,String pages) {
-        //페이징 구현
         int page = Integer.parseInt(pages);
-        PageMaker pageMaker = new PageMaker();
-        pageMaker.setTotalCount(page);
-        int start = (page-1)*5;
-        int end = start+5;
-        final String sql = "SELECT * FROM board WHERE title LIKE ? LIMIT ?,?";
-        List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper(), "%"+keyword+"%",start,end);
+        int start = (page-1)*10;
+        log.info("start : "+start);
+        //
+        final String sql = "SELECT * FROM board WHERE title LIKE ? ORDER BY created_at ASC LIMIT ?,10";
+        List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper(), "%"+keyword+"%",start);
         log.info("findBoard : {}",findBoard);
         return findBoard;
 //
@@ -94,5 +92,12 @@ public class BoardRepositoryImpl implements BoardRepository{
         }
         return false;
 
+    }
+    @Override
+    public int count(String keyword){
+        final String sql = "SELECT count(*) FROM board WHERE title LIKE ?";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, "%"+keyword+"%");
+        log.info("title :{} count : {}",keyword,count);
+        return count;
     }
 }

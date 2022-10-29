@@ -90,6 +90,12 @@ class BoardServiceImplTest {
         }
         log.info("FindByOrder={}",sb.toString());
     }
+    @Test
+    void 임의데이터생성하기(){
+        for (int i = 0; i < 100; i++) {
+            boardService.save(new Board(i, "페이징"+i, "content"+i, 0, "image"+i, "root"));
+        }
+    }
 
     @Test
     void delete() {

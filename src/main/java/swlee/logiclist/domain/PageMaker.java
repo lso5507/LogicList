@@ -12,7 +12,7 @@ public class PageMaker {
     private int endPage; // 5개의 페이지중
     private int totalPage;
     private boolean next; // 페이지 다음 버튼
-    private int displayPageNum = 5;
+//    private int displayPageNum = 5;
 
 
     public void setTotalCount(int totalCount) {
@@ -26,7 +26,8 @@ public class PageMaker {
     }
     public void setStartPage(int startPage){
         //Controller 에서 page 값을 받아온다.
-        setEndPage(startPage+4);
+        this.startPage=startPage;
+        setEndPage(startPage+9);
 
     }
     public boolean isNext() {
@@ -34,11 +35,11 @@ public class PageMaker {
     }
 
     private void calcData() { // 페이지 데이터 처리
-        if(this.totalCount%5==0){
-            this.totalPage=(int)(Math.ceil(this.totalCount/5.0));
+        if(this.totalCount%10==0){
+            this.totalPage=(int)(Math.ceil(this.totalCount/10.0));
 
         }else{
-            this.totalPage=(int)(Math.ceil(this.totalCount/5.0))+1;
+            this.totalPage=(int)(Math.ceil(this.totalCount/10.0))+1;
         }
         // totalPage(총 게시글 갯수를 page 단위로 나눈 값)가 endPage보다 크면 Next 버튼 생성
         if(totalPage>endPage){
