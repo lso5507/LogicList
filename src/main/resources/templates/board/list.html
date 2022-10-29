@@ -53,7 +53,7 @@
 <!--                            <a th:href="@{list(page=${pageMaker.startPage},keyword=$${#httpServletRequest.getParameter('keyword')}" th:text="${pageMaker.startPage}"> </a>-->
 <!--                        </li>-->
                     <nav style="text-align: center;">
-                        <ul class="pagination" th:with="start=${pageMaker.startPage}, end=${pageMaker.endPage}-1">
+                        <ul class="pagination" th:with="start=${pageMaker.startPage}, end=${pageMaker.endPage}">
 
                             <li th:each="page: ${#numbers.sequence(start, end)}">
                                 <th:block th:if="${pageStat.first}">

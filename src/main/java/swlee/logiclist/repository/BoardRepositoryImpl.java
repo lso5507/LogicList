@@ -65,6 +65,22 @@ public class BoardRepositoryImpl implements BoardRepository{
         int page = Integer.parseInt(pages);
         int start = (page-1)*10;
         log.info("start : "+start);
+        //postgres
+        final String sql = "SELECT * FROM board WHERE title LIKE ? ORDER BY created_at ASC LIMIT 10 OFFSET ?";
+
+        List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper(), "%"+keyword+"%",start);
+        log.info("findBoard : {}",findBoard);
+        return findBoard;
+//
+//        final String sql = "SELECT * FROM board WHERE content LIKE ? OR title LIKE ?";
+//        keyword='%'+keyword+'%';
+//        List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper(),keyword,keyword);
+//        return findBoard;
+    }
+    public List<Board> findByName_win(String keyword,String pages) {
+        int page = Integer.parseInt(pages);
+        int start = (page-1)*10;
+        log.info("start : "+start);
         //
         final String sql = "SELECT * FROM board WHERE title LIKE ? ORDER BY created_at ASC LIMIT ?,10";
         List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper(), "%"+keyword+"%",start);
@@ -79,6 +95,11 @@ public class BoardRepositoryImpl implements BoardRepository{
     //최신 게시글 5개 긁어오기
     @Override
     public List<Board> findByOrder() {
+        final String sql = "SELECT * FROM BOARD order by created_at desc LIMIT 3";
+        List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper());
+        return findBoard;
+    }
+    public List<Board> findByOrder_win() {
         final String sql = "SELECT * FROM BOARD order by created_at desc LIMIT 3";
         List<Board> findBoard = jdbcTemplate.query(sql, getRowMapper());
         return findBoard;

@@ -16,11 +16,26 @@ public class AppConfig {
             String os = System.getProperty("os.name").toLowerCase();
             //os 가 mac을 포함
             if(os.contains("mac")){
-                password="";
-            }else if(os.contains("window")){
+                password="lsw96";
+                DriverManagerDataSource dataSource = new DriverManagerDataSource();
+                dataSource.setUsername("lsw");
+                dataSource.setPassword(password);
+                //postgresql DriverClassname
+                dataSource.setDriverClassName("org.postgresql.Driver");
+//                dataSource.setUrl("jdbc:postgresql:tcp://localhost/~/logiclist");
+                dataSource.setUrl("jdbc:postgresql://localhost:5432/logiclist");
+                return dataSource;
+            }
+            else if(os.contains("window")){
                 password="1111";
-
-            }else if(os.contains("linux")){
+                DriverManagerDataSource dataSource = new DriverManagerDataSource();
+                dataSource.setUsername("sa");
+                dataSource.setPassword(password);
+                dataSource.setDriverClassName("org.h2.Driver");
+                dataSource.setUrl("jdbc:h2:tcp://localhost/~/test");
+                return dataSource;
+            }
+            else {
                 password="lsw96";
                 DriverManagerDataSource dataSource = new DriverManagerDataSource();
                 dataSource.setUsername("lsw");
@@ -35,12 +50,7 @@ public class AppConfig {
                 return dataSource;
             }
         }
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setUsername("sa");
-        dataSource.setPassword(password);
-        dataSource.setDriverClassName("org.h2.Driver");
-        dataSource.setUrl("jdbc:h2:tcp://localhost/~/test");
-        return dataSource;
+
     }
 
     @Bean

@@ -34,12 +34,12 @@ logging:
 
 ---
 # 로컬 환경
-#spring:
-#  environment: "local"
-#  config:
-#    activate:
-#      on-profile: "local"
-#  file-dir: /src/main/resources/static/files/
+spring:
+  environment: "local"
+  config:
+    activate:
+      on-profile: "local"
+  file-dir: /src/main/resources/static/files/
 ---
 # 배포 환경
 spring:

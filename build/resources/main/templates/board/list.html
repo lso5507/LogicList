@@ -23,41 +23,64 @@
 </head>
 
 <body>
-<div >
-    <div class="back_color">
-        <div class=main>
-            <div class="logo">
-                <span th:onclick="|location.href='@{/view/main}'|"   class="logo_text">LogicList</span>
-            </div>
-            <div class=e0_60>
-                <div class="e0_21"th:if="${user}">
-                    <span class="e0_63">[[${user}]] 님 환영합니다.</span>
+    <div >
+        <div class="back_color">
+            <div class=main style="margin-top:0px;">
+                <div class="logo">
+                    <span th:onclick="|location.href='@{/view/main}'|"   class="logo_text">LogicList</span>
                 </div>
-            </div>
-            <div class="content">
-                <div class="e38_35" th:each="board : ${boards}" >
-                    <div class="e35_left">
-                        <a class="content_title" th:text="${board.title}" th:href="@{update(bid=${board.id})}"></a>
+                <div class=e0_60>
+                    <div class="e0_21"th:if="${user}">
+                        <span class="e0_63">[[${user}]] 님 환영합니다.</span>
                     </div>
-                    <div class="e35_right">
-                        <span class="content_user" th:text="${board.username}"></span>
-                        <div class="v-line"></div>
-                        <div class="content_count_div">
-                            <span class="content_count">조회수 : [[${board.clickCnt}]]</span>
+                </div>
+                <div class="content">
+                    <div class="e38_35" th:each="board : ${boards}" >
+                        <div class="e35_left">
+                            <a class="content_title" th:text="${board.title}" th:href="@{update(bid=${board.id})}"></a>
+                        </div>
+                        <div class="e35_right">
+                            <span class="content_user" th:text="${board.username}"></span>
+                            <div class="v-line"></div>
+                            <div class="content_count_div">
+                                <span class="content_count">조회수 : [[${board.clickCnt}]]</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="e38_105"></div>
+                <div class="e38_105">
+<!--                        <li th:each="num:${#numbers.sequence(0,10)}">-->
+<!--                            <a th:href="@{list(page=${pageMaker.startPage},keyword=$${#httpServletRequest.getParameter('keyword')}" th:text="${pageMaker.startPage}"> </a>-->
+<!--                        </li>-->
+                    <nav style="text-align: center;">
+                        <ul class="pagination" th:with="start=${pageMaker.startPage}, end=${pageMaker.endPage}">
+
+                            <li th:each="page: ${#numbers.sequence(start, end)}">
+                                <th:block th:if="${pageStat.first}">
+                                    <a class="active" th:href="@{list(page=${page},keyword=${#httpServletRequest.getParameter('keyword')})}" th:text="${page}"></a>
+                                </th:block>
+                                <th:block th:if="${!pageStat.first}">
+                                    <a th:href="@{list(page=${page},keyword=${#httpServletRequest.getParameter('keyword')})}" th:text="${page}"></a>
+                                </th:block>
+                            </li>
 
 
-            <!--        footer-->
-            <div class=footer>
-                <span class="e0_26">Tistory </span><span class="e0_27">Github</span><span
-                    class="e0_28">Instagram</span><span class="e0_24">LSW</span>
-            </div>
+                        </ul>
+                    </nav>
+
+
+                </div>
+
+
+        </div>
+
+        <!--        footer-->
+        <div class=footer>
+            <span class="footer_text">Tistory </span>
+            <span class="footer_text">Github</span>
+            <span class="footer_text">Instagram</span>
+            <span class="footer_text">LSW</span>
+        </div>
     </div>
-
-</div>
 </body>
 </html>
