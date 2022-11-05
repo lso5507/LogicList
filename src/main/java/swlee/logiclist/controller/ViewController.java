@@ -114,6 +114,9 @@ public class ViewController {
                 log.info("Delete Todo");
                 todoService.remove(todo);
             }
+            else{
+                log.error("Not Supported Parameter::{}",param);
+            }
         }
         catch (Exception e){
             log.error("Todo_complete Post Error",e);

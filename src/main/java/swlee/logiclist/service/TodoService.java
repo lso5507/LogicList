@@ -62,12 +62,16 @@ public class TodoService {
             //todo.getData()가 24시간이 지났을경우
             if (todo.getDate().getTime() + 86400000 < System.currentTimeMillis()) { //86400000=24시간
                 removeTodoList.add(todo);
+                log.info("RemoveTodoList_ADD::{}",todo.getContent());
             }
         }
-        //지우기 전 revmoveTodoList를 DB저장
-        upload(removeTodoList);
-        //removeTodoList를 memoryTodoList에서 제거
-        memoryTodoList.removeAll(removeTodoList);
+        if(removeTodoList.size()>0){
+            //지우기 전 revmoveTodoList를 DB저장
+            upload(removeTodoList);
+            //removeTodoList를 memoryTodoList에서 제거
+            memoryTodoList.removeAll(removeTodoList);
+        }
+
         return memoryTodoList;
     }
 
