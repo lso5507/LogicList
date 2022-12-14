@@ -16,6 +16,8 @@ import javax.sql.DataSource;
 class UserRepositoryImplTest {
 
     private final String USER_A = "USER_A";
+    private final String USER_B = "USER_B";
+
     @Autowired
     private  UserRepository userRepository;
 
@@ -23,6 +25,8 @@ class UserRepositoryImplTest {
     @AfterEach
     void after()  {
         userRepository.delete(USER_A);
+        userRepository.delete(USER_B);
+
     }
     @Test
     void save() {
@@ -33,10 +37,10 @@ class UserRepositoryImplTest {
 
     @Test
     void findByName() {
-        User user = new User(USER_A,"test");
+        User user = new User(USER_B,"test");
         User save = userRepository.save(user);
 
-        User byName = userRepository.findByName(USER_A);
+        User byName = userRepository.findByName(USER_B);
         log.info("Find User ={}",byName.getUsername());
         Assertions.assertThat(byName).isNotNull();
 

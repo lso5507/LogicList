@@ -15,16 +15,16 @@ import static org.junit.jupiter.api.Assertions.*;
 @Slf4j
 @SpringBootTest
 public class PasswordEncTest {
-    @Test
-    public void enc(){
-         final String plainPassword="1234";
-        User user = new User("LSW",plainPassword);
-        User user2 = new User("LSW2",plainPassword);
-
-        log.info("Password={}",user.getPassword());
-        boolean result = BCrypt.checkpw(plainPassword, user.getPassword());
-        Assertions.assertThat(result).isTrue();
-    }
+//    @Test
+//    public void enc(){
+//         final String plainPassword="1234";
+//        User user = new User("LSW",plainPassword);
+//        User user2 = new User("LSW2",plainPassword);
+//
+//        log.info("Password={}",user.getPassword());
+//        boolean result = BCrypt.checkpw(plainPassword, user.getPassword());
+//        Assertions.assertThat(result).isTrue();
+//    }
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Test

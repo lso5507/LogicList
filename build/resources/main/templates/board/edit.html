@@ -127,7 +127,11 @@
                 cache: 'no-cache',
                 body: formData // body 부분에 폼데이터 변수를 할당
             })
-            .then((response) => response.json())
+            .then((response) => {
+                 console.log(response.status);
+                return response;
+
+            })
             .then((data) => {
                if(data.result=="success"){
                 alert("성공")
@@ -136,6 +140,7 @@
                else if(data.result=="failed"){
                 alert("실패")
                }
+
             });
 
         }

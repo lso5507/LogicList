@@ -33,7 +33,7 @@ public class S3UploaderController {
     @ResponseBody
     public String imageUpload(@RequestParam("data") MultipartFile multipartFile) throws IOException {
         log.info("imageUpload IN");
-        String result = s3UploaderService.upload(multipartFile, "logiclist", "image");
+        String result = s3UploaderService.upload(multipartFile, "logiclistlee", "image");
         String jsonData = toJson(result);
         return jsonData;
 
@@ -49,7 +49,7 @@ public class S3UploaderController {
             log.info("img::{}",img);
         }
 
-        String result = s3UploaderService.removeS3File(imgArr, "logiclist");
+        String result = s3UploaderService.removeS3File(imgArr, "logiclistlee");
         String jsonData = toJson(result);
         return jsonData;
     }

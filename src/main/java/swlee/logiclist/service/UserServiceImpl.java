@@ -35,20 +35,18 @@ public class UserServiceImpl implements UserService {
         /*
             Repository에서 가져온  User정보와 입력 User정보 패스워드 비교 필요
          */
+
         User findUser = userRepository.findByName(user.getUsername());
         //username Check
         if(findUser==null){
             log.error("IncorrectAccountException",new IncorrectAccountException("계정이 올바르지 않습니다."));
             return null;
         }
-        if(passwordCheck(user, findUser)){
+        else if(passwordCheck(user, findUser)){
             log.info("Correct Password ");
             return  findUser;
-        }else{
-            log.error("IncorrectAccountException",new IncorrectAccountException("계정이 올바르지 않습니다."));
-            return null;
         }
-
+        return null;
     }
     private  User encPassword(User user){
         return new User(user.getUsername(),passwordEncoder.encode(user.getPassword()));
@@ -70,6 +68,7 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User findUser = userRepository.findByName(username);
         if(findUser==null){
+            log.error("UsernameNotFoundException::",new UsernameNotFoundException(username));
             throw new UsernameNotFoundException(username);
         }
         log.info("loadUserByUserName!!::{}",username);

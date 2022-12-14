@@ -21,7 +21,7 @@ cloud:
     region:
       static: ap-northeast-2
     s3:
-      bucket: logiclist
+      bucket: logiclistlee
     stack:
       auto: false
 

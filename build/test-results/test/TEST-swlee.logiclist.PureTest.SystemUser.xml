@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="swlee.logiclist.PureTest.SystemUser" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-12-13T03:49:16" hostname="iseog-un-ui-MacBookPro.local" time="0.003">
+  <properties/>
+  <testcase name="test()" classname="swlee.logiclist.PureTest.SystemUser" time="0.003"/>
+  <system-out><![CDATA[leeseokwoon
+os = mac os x
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

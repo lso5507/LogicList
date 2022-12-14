@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="swlee.logiclist.PureTest.BoardUpdateTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-10-07T10:03:44" hostname="iseog-un-ui-MacBookPro.local" time="0.031">
+<testsuite name="swlee.logiclist.PureTest.BoardUpdateTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2022-12-13T03:49:16" hostname="iseog-un-ui-MacBookPro.local" time="0.003">
   <properties/>
-  <testcase name="test()" classname="swlee.logiclist.PureTest.BoardUpdateTest" time="0.031"/>
+  <testcase name="test()" classname="swlee.logiclist.PureTest.BoardUpdateTest" time="0.003"/>
   <system-out><![CDATA[data = image/4562be21-d31c-4f6e-919d-450f9bcb4d4579217e47-98ae-4fe0-9901-1b0806871358.png
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>

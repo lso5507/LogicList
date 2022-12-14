@@ -36,9 +36,9 @@ public class AppConfig {
                 return dataSource;
             }
             else {
-                password="lsw96";
+                    password="tjrdns9^";
                 DriverManagerDataSource dataSource = new DriverManagerDataSource();
-                dataSource.setUsername("lsw");
+                dataSource.setUsername("lee");
                 dataSource.setPassword(password);
                 //postgresql DriverClassname
                 dataSource.setDriverClassName("org.postgresql.Driver");

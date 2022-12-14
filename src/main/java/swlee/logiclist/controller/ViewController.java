@@ -59,6 +59,16 @@ public class ViewController {
         log.info("ViewController In Login");
         return "login";
     }
+    @PostMapping("/login")
+    public String login_post(User user , Model model){
+        log.debug("login_POST IN");
+        User findUser = userservice.findByName(user);
+        if(findUser==null){
+            return "status/404";
+        }
+        model.addAttribute("user",user);
+        return "main";
+    }
     @GetMapping("/signup")
     public String signup(){
         log.info("ViewController In Signup");
@@ -124,15 +134,6 @@ public class ViewController {
         }
         return "success";
     }
-    /*
-    @PostMapping("/login")
-    public String login_post(User user , Model model){
-        User findUser = userservice.findByName(user);
-        if(findUser==null){
-            return "status/404";
-        }
-        model.addAttribute("user",user);
-        return "main";
-    }*/
+
 
 }

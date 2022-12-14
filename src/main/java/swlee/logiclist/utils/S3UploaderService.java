@@ -94,9 +94,8 @@ public class S3UploaderService {
             log.info("file::{}",file);
             String fileName=file.substring(file.indexOf("image"));
             //File  not Exist
-            if(!amazonS3Client.doesObjectExist("logiclist", fileName)){
+            if(!amazonS3Client.doesObjectExist("logiclistlee", fileName)){
                 log.error("AWS S3 Error!!! :: File not Exist!!");
-                return "failed";
             }
             log.info("file name : "+ fileName);
             try {
