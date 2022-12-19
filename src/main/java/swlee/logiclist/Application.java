@@ -4,10 +4,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
 
+
+
+@ConfigurationProperties(prefix = "spring.")
+class AWSConfig{
+	public String environment;
+	private String fileDir;
+}
 @SpringBootApplication
 public class Application {
 	@Value("${spring.environment}")

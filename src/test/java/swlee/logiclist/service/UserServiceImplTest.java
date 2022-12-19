@@ -77,4 +77,5 @@ class UserServiceImplTest {
         boolean delete = userService.delete(USER_A);
         Assertions.assertThat(delete).isNotEqualTo(false);
     }
+
 }
