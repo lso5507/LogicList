@@ -11,12 +11,6 @@ public interface UserService extends UserDetailsService {
      */
     public User save(User user); //첫번째 가입만 받음(관리자)
 
-    /**
-     * @Prameter
-     * User user - 유저
-     * @return User
-     */
-    public User findByName(User user);
 
     /**
      * @Prameter

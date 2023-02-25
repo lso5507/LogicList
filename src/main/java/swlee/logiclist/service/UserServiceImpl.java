@@ -30,24 +30,7 @@ public class UserServiceImpl implements UserService {
         return save;
     }
 
-    @Override
-    public User findByName(User user) {
-        /*
-            Repository에서 가져온  User정보와 입력 User정보 패스워드 비교 필요
-         */
 
-        User findUser = userRepository.findByName(user.getUsername());
-        //username Check
-        if(findUser==null){
-            log.error("IncorrectAccountException",new IncorrectAccountException("계정이 올바르지 않습니다."));
-            return null;
-        }
-        else if(passwordCheck(user, findUser)){
-            log.info("Correct Password ");
-            return  findUser;
-        }
-        return null;
-    }
     private  User encPassword(User user){
         return new User(user.getUsername(),passwordEncoder.encode(user.getPassword()));
 //        return new User(user.getUsername(),BCrypt.hashpw(user.getPassword(),BCrypt.gensalt(10)));
