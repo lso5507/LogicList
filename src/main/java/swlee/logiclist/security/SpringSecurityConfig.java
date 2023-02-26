@@ -1,9 +1,11 @@
 package swlee.logiclist.security;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.Authentication;
@@ -26,18 +28,21 @@ import java.io.IOException;
 @Configuration
 @EnableWebSecurity
 @Slf4j
-public class SpringSecurityConfig  {
+public class SpringSecurityConfig {
+    @Autowired
+    private MyAuthenticationProvider myAuthenticationProvider;
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws
             Exception {
         http
-
+                .authenticationProvider(myAuthenticationProvider)
                 .authorizeRequests()
                 /**
                  * image-upload,image - AWS 테스트용
                  */
-                    .antMatchers("/view/login*","/view/signup","/view/todo_data","/view/todo","/image-**","/image","/view/main","/css/**","/js/**","/plugin/**","/fonts/**")// /view/main 인증 없이 접근가능
+                    .antMatchers("/view/test","/view/login*","/view/signup","/view/todo_data","/view/todo","/image-**","/image","/view/main","/css/**","/js/**","/plugin/**","/fonts/**")// /view/main 인증 없이 접근가능
                     .permitAll()
                     .anyRequest().authenticated() // 그 외 요청은 권한 필요
                 .and()

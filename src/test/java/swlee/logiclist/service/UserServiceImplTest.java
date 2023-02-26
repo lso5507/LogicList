@@ -38,37 +38,8 @@ class UserServiceImplTest {
         Assertions.assertThat(save).isNotNull();
     }
 
-    @Test
-    void findByName() {
-        User user = new User(USER_A,"test");
-        userService.save(user);
-        log.info("====UserPassword===::{}",user.getPassword());
-        User byName = userService.findByName(user);
-        log.info("Find User ={}",byName.getUsername());
-        Assertions.assertThat(byName).isNotNull();
 
 
-    }
-    @Test
-    @DisplayName("패스워드 일치")
-    void findByName_ok(){
-        User user = new User("root","1111");
-        User byName = userService.findByName(user);
-        Assertions.assertThat(byName).isNotNull();
-    }
-
-    @Test
-    @DisplayName("없는 아이디 검색")
-    void findByName_ex(){
-        User user = new User(USER_A,"1234");
-        Assertions.assertThat(userService.findByName(user)).isNull();
-    }
-    @Test
-    @DisplayName("패스워드 불일치")
-    void findByName_ex2(){
-        User user = new User("root","12334");
-        Assertions.assertThat(userService.findByName(user)).isNull();
-    }
 
     @Test
     void delete() {

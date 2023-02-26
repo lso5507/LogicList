@@ -38,6 +38,7 @@ public class ViewController {
     // TODOService-> 추후 분리필요
     @Autowired
     private TodoService todoService;
+
     @GetMapping("/main")
     public String main(Principal principal,Model model){
         log.info("ViewController In {}",this.getClass());

@@ -36,17 +36,34 @@ public class UserServiceImpl implements UserService {
 //        return new User(user.getUsername(),BCrypt.hashpw(user.getPassword(),BCrypt.gensalt(10)));
     }
 
-    private  boolean passwordCheck(User user, User findUser) {
-        return passwordEncoder.matches(user.getPassword(),findUser.getPassword());
-//       return BCrypt.checkpw(user.getPassword(), findUser.getPassword());
-    }
 
     @Override
     public boolean delete(String username) {
         boolean result = userRepository.delete(username);
         return result;
     }
-
+//    @Override
+//    public User findByName(User user) {
+//        /*
+//            Repository에서 가져온  User정보와 입력 User정보 패스워드 비교 필요
+//         */
+//
+//        User findUser = userRepository.findByName(user.getUsername());
+//        //username Check
+//        if(findUser==null){
+//            log.error("IncorrectAccountException",new IncorrectAccountException("계정이 올바르지 않습니다."));
+//            return null;
+//        }
+//        else if(passwordCheck(user, findUser)){
+//            log.info("Correct Password ");
+//            return  findUser;
+//        }
+//        return null;
+//    }
+//    private  boolean passwordCheck(User user, User findUser) {
+//        return passwordEncoder.matches(user.getPassword(),findUser.getPassword());
+////       return BCrypt.checkpw(user.getPassword(), findUser.getPassword());
+//    }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User findUser = userRepository.findByName(username);
