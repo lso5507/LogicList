@@ -39,7 +39,6 @@ public class UserRepositoryImpl implements UserRepository{
 //        String sql = "insert into member(member_id,money)values(?,?)";
 
         jdbcTemplate.update(sql,user.getUsername(),user.getPassword());
-
         return user;
     }
 

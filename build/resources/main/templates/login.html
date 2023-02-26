@@ -54,5 +54,14 @@
     </div>
 
 </div>
+<script>
+    const url = new URL(window.location.href).searchParams.get('error');
+
+    console.log(url);
+
+    if(url === 'failed'){
+        alert('아이디 또는 비밀번호가 틀렸습니다.');
+    }
+</script>
 </body>
 </html>
