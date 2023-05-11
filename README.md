@@ -1,4 +1,6 @@
 # 프로젝트 설명
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flso5507%2FLogicList.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Flso5507%2FLogicList?ref=badge_shield)
+
 
 1. 정리되지 않은(쓰레기 코드)  검색하기 위한 로직리스트 블로그 개발
 2. TODOLIST 기능 개발
@@ -52,3 +54,7 @@
         - 추후 Todo 테이블과 분리하여 운용필요
     - 최대 5개의 TodoList 전달
 - [**페이징 구현**](https://dev-swlee.tistory.com/22)
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Flso5507%2FLogicList.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Flso5507%2FLogicList?ref=badge_large)
